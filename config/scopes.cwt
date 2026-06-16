@@ -60,11 +60,7 @@ scopes = {
     Starbase = {
         aliases = { starbase }
     }
-	# guess to match modifier category
-	Waystations = {
-		aliases = { waystations }
-	}
-    Star = {
+	Star = {
         aliases = { star }
     }
 	Deposit = {
