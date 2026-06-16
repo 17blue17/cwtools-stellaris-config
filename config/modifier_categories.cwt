@@ -86,6 +86,12 @@ modifier_categories = {
 	"Astral Rift" = {
 		supported_scopes = { astral_rift }
 	}
+	Colony = {
+		supported_scopes = { megastructure planet ship pop_group leader army starbase deposit archaeological_site pop_job colony }
+	}
+	Waystations = {
+		supported_scopes = { starbase country }
+	}
 	None = {
 		supported_scopes = { any  }
 	}
