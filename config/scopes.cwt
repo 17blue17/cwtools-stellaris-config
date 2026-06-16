@@ -123,27 +123,48 @@ scopes = {
 	"Ship Growth Stage" = {
 		aliases = { ship_growth_stage }
 	}
+	"Colony" = {
+		aliases = { colony }
+	}
+	"Mission" = {
+		aliases = { mission }
+	}
+	"First Damaging Country" = {
+		aliases = { first_damaging_country First_Damaging_Country }
+	}
+	"Second Damaging Country" = {
+		aliases = { second_damaging_country Second_Damaging_Country}
+	}
+	"Third Damaging Country" = {
+		aliases = { third_damaging_country Third_Damaging_Country}
+	}
+	"Issuer" = {
+		aliases = { issuer }
+	}
+	"Carrier" = {
+		aliases = { carrier }
+	}
 }
 
 scope_groups = {
     celestial_coordinate = {
-        planet ship fleet system ambient_object megastructure starbase archaeological_site first_contact
+        colony planet ship fleet system ambient_object megastructure starbase archaeological_site first_contact
         deposit pop pop_group pop_job army country leader debris astral_rift bypass
     }
     spatial_object = {
-        planet ship fleet ambient_object megastructure starbase archaeological_site debris galactic_object astral_rift bypass
+        colony planet ship fleet ambient_object megastructure starbase archaeological_site debris galactic_object astral_rift bypass
     }
     target_species = {
-        country pop pop_group leader planet ship fleet army species first_contact
+        country pop pop_group leader colony planet ship fleet army species first_contact
     }
     target_planet = {
-        pop pop_group planet deposit archaeological_site megastructure ship fleet army situation espionage_operation
+        pop pop_group colony planet deposit archaeological_site megastructure ship fleet army situation espionage_operation
     }
     target_country = {
-        planet fleet system ship pop pop_group pop_job army leader pop_faction country megastructure starbase deposit
+        colony planet fleet system ship pop pop_group pop_job army leader pop_faction country megastructure starbase deposit
         sector archaeological_site first_contact spy_network agreement debris situation astral_rift bypass exhibit
     }
     target_leader = {
-        country fleet ship army leader archaeological_site first_contact espionage_operation spy_network planet
+        country fleet ship army leader archaeological_site first_contact espionage_operation spy_network colony planet
     }
 }
