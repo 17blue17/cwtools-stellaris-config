@@ -18,9 +18,6 @@ scopes = {
     Fleet = {
         aliases = { fleet }
     }
-	Pop = {
-        aliases = { pop }
-    }
 	"Pop Group" = {
         aliases = { pop_group }
     }
@@ -149,19 +146,19 @@ scopes = {
 scope_groups = {
     celestial_coordinate = {
         colony planet ship fleet system ambient_object megastructure starbase waystations archaeological_site first_contact
-        deposit pop pop_group pop_job army country leader debris astral_rift bypass
+        deposit pop_group pop_job army country leader debris astral_rift bypass
     }
     spatial_object = {
         colony planet ship fleet ambient_object megastructure starbase waystations archaeological_site debris galactic_object astral_rift bypass
     }
     target_species = {
-        country pop pop_group leader colony planet ship fleet army species first_contact
+        country pop_group leader colony planet ship fleet army species first_contact
     }
     target_planet = {
-        pop pop_group colony planet deposit archaeological_site megastructure ship fleet army situation espionage_operation
+        pop_group colony planet deposit archaeological_site megastructure ship fleet army situation espionage_operation
     }
     target_country = {
-        colony planet fleet system ship pop pop_group pop_job army leader pop_faction country megastructure starbase waystations deposit
+        colony planet fleet system ship pop_group pop_job army leader pop_faction country megastructure starbase waystations deposit
         sector archaeological_site first_contact spy_network agreement debris situation astral_rift bypass exhibit
     }
     target_leader = {
