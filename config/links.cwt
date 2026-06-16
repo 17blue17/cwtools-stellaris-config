@@ -194,11 +194,6 @@ links = {
 		input_scopes = { planet ship fleet galactic_object starbase colony }
 		output_scope = Starbase
 	}
-	#guess to match modifier categories
-	waystations = {
-		input_scopes = { planet ship fleet galactic_object starbase waystations colony }
-		output_scope = waystations
-	}
 	colony = {
 		input_scopes = { megastructure planet ship pop_group leader army starbase deposit archaeological_site pop_job colony }
 		output_scope = colony
