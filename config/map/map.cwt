@@ -138,6 +138,7 @@ map_setup_scenario = {
 	}
 	##cardinality = 0..1
 	num_gateways_default = float
+	##cardinality = 0..1 
 	num_hyperlanes = {
 		min = float
 		max = float
