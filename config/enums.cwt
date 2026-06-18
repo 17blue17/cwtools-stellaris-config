@@ -197,22 +197,23 @@ enums = {
 		use_bypass_order
 	}
 	enum[galaxy_setup_values] = {
-		num_empires
-		num_advanced_empires
-		num_fallen_empires
-		num_marauder_empires
-		mid_game_year
-		end_game_year
-		victory_year
-		num_guaranteed_colonies
-		num_gateways
-		num_wormhole_pairs
-		num_hyperlanes
-		habitable_worlds_scale
-		primitive_worlds_scale
 		crisis_strength_scale
-		tech_costs_scale
+		end_game_year
+		fallen_empire_strength_scale
+		habitable_worlds_scale
+		mid_game_year
+		num_advanced_empires
+		num_empires
+		num_fallen_empires
+		num_gateways
+		num_guaranteed_colonies
+		num_hyperlanes
+		num_marauder_empires
 		num_stars
+		num_wormhole_pairs
+		primitive_worlds_scale
+		tech_costs_scale
+		victory_year
 	}
 	enum[federation_succession_types] = {
 		strongest
