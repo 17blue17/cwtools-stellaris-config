@@ -1,11 +1,11 @@
 
 types = {
-	type[mission] = {
+	type[mission_type] = {
 		path = "game/common/missions"
 	}
 }
 
-mission = {
+mission_type = {
 
 	desc = localisation
 	event_chain = <event_chain>
