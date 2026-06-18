@@ -30,7 +30,7 @@ links = {
 	}
 	owner = {
 		input_scopes = {
-			megastructure planet country ship pop_group fleet galactic_object leader army bypass pop_faction starbase deposit sector archaeological_site first_contact spy_network espionage_operation agreement situation debris astral_rift colony mission        
+			megastructure planet country ship Pop pop_group fleet galactic_object leader army bypass pop_faction starbase deposit sector archaeological_site first_contact spy_network espionage_operation agreement situation debris astral_rift colony mission        
 		}
 		output_scope = Country
 	}
@@ -39,7 +39,7 @@ links = {
 		output_scope = Country
 	}
 	planet_owner = {
-		input_scopes = { megastructure planet ship pop_group leader army starbase deposit archaeological_site pop_job colony }
+		input_scopes = { megastructure planet ship pop_group leader army starbase deposit archaeological_site Pop pop_group pop_job colony }
 		output_scope = Country
 	}
 	last_created_country = {
@@ -56,7 +56,7 @@ links = {
 		output_scope = Leader
 	}
 	solar_system = {
-		input_scopes = { megastructure planet country ship pop_group fleet galactic_object leader army ambient_object bypass starbase deposit archaeological_site first_contact debris astral_rift colony
+		input_scopes = { megastructure planet country ship Pop pop_group fleet galactic_object leader army ambient_object bypass starbase deposit archaeological_site first_contact debris astral_rift colony
 		}
 		output_scope = System
 	}
@@ -65,7 +65,7 @@ links = {
 		output_scope = System
 	}
 	planet = {
-		input_scopes = { megastructure planet ship pop_group leader army starbase deposit archaeological_site pop_job colony }
+		input_scopes = { megastructure planet ship Pop pop_group leader army starbase deposit archaeological_site pop_job colony }
 		output_scope = planet
 	}
 	capital_scope = {
