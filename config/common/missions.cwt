@@ -1,5 +1,4 @@
 
-
 types = {
 	type[mission_type] = {
 		path = "game/common/missions/missions"
@@ -60,7 +59,7 @@ mission_type = {
 
 mission_category_type = {
 	## cardinality = 0..1
-	is_contract = yes
+	is_contract = bool
 	## cardinality = 0..1
 	map_icon = <sprite>
 	## cardinality = 0..1
