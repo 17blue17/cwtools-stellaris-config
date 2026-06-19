@@ -50,7 +50,7 @@ alias[trigger:relative_power] = {
 ###Checks if the country has a specific election type
 alias[trigger:has_election_type] = enum[election_types]
 
-###Checks if the country/planet/pop/system has a certain modifier
+###Checks if the scoped object has a certain modifier.  NOTE: For colony scope, it will check the carrier modifiers.
 alias[trigger:has_modifier] = <static_modifier>
 
 ###Checks if the country has a specific opinion modifier towards target country or anyone
@@ -237,8 +237,6 @@ alias[trigger:pop_has_ethic] = <ethos>
 
 ###Checks the country's used starbase capacity in relative terms (0.00-1.00)
 alias[trigger:used_starbase_capacity_percent] == value_field[0..1.0]
-###Checks the country's used starbase capacity in absolute numbers
-alias[trigger:used_starbase_capacity_integer] == int_value_field
 
 ###Checks the inner radius of a solar system
 alias[trigger:inner_radius] == int_value_field
@@ -302,13 +300,13 @@ alias[trigger:is_at_war_with] = scope_group[target_country]
 alias[trigger:is_within_borders_of] = scope_group[target_country]
 ###Check if the country has a non-aggression pact with target country
 alias[trigger:has_non_aggression_pact] = scope_group[target_country]
-###Checks if the planet/ship/fleet/astral rift/starbase is controlled by the target country
+###Checks if the scoped object is controlled by the target country
 alias[trigger:is_controlled_by] = scope_group[target_country]
-###Checks if the country/planet is neighbors with target country
+###Checks if the scoped object is neighbors with target country
 alias[trigger:is_neighbor_of] = scope_group[target_country]
 ###Checks if the target country is the planet's original owner
 alias[trigger:is_original_owner] = scope_group[target_country]
-###Checks if the planet/system/army/ship is owned by the target country
+###Checks if the scoped object is owned by the target country
 alias[trigger:is_owned_by] = scope_group[target_country]
 ###Checks if the country is the same as another, target country
 alias[trigger:is_same_empire] = scope_group[target_country]
@@ -375,9 +373,9 @@ alias[trigger:is_at_war] = bool
 alias[trigger:is_ai] = bool
 ###Checks whether a planet is under bombardment
 alias[trigger:has_orbital_bombardment] = bool
-###Checks if the planet/system is colonized
+###Checks if the colony carrier is colonized (in colony or carrier scope) or the system has an owner (in system scope)
 alias[trigger:has_owner] = bool
-###Checks if ground combat is taking place on the planet
+###Checks if ground combat is taking place on the colony
 alias[trigger:has_ground_combat] = bool
 ###Sets trigger to be either always true or false
 alias[trigger:always] = bool
@@ -395,11 +393,11 @@ alias[trigger:is_in_combat] = bool
 alias[trigger:is_star] = bool
 ###Checks if the planet is an asteroid
 alias[trigger:is_asteroid] = bool
-###Checks if the planet has any strategic resource
+###Checks if the colony carrier has any strategic resource
 alias[trigger:has_any_strategic_resource] = bool
 ###Checks if the country leads in a war
 alias[trigger:is_war_leader] = bool
-###Checks if the planet is under military occupation
+###Checks if the colony is under military occupation
 alias[trigger:is_occupied_flag] = bool
 
 ###Checks if the planet is of a certain class
@@ -411,7 +409,7 @@ alias[trigger:is_star_class] = <star_class>
 alias[trigger:is_star_class] = scope[system]
 ###Checks if the planet is a ringworld
 alias[trigger:is_ringworld] = bool
-###Checks if the planet is its owner's homeworld
+###Checks if the colony carrier is its owner's homeworld
 alias[trigger:is_homeworld] = bool
 ###checks if the planet/ship/fleet/system is inside a nebula
 alias[trigger:is_inside_nebula] = bool
@@ -555,8 +553,13 @@ alias[trigger:has_mission] = <observation_station_mission>
 #these should check < and > too
 ###Checks the number of in-game years passed since the 2200 start
 alias[trigger:years_passed] == int_value_field
-###Checks the country's number of owned planets
-alias[trigger:num_owned_planets] == int_value_field
+
+###Checks the country's or sector's number of owned colonies (includes both planet and ship colonies).  NOTE: replaces num_owned_planets.
+alias[trigger:num_owned_colonies] == int_value_field
+
+###ERROR:  Deprecated: use num_owned_colonies instead
+alias[trigger:num_owned_planets] = use_num_owned_colonies_instead
+
 ###Compares the stability present on the planet with the given value
 alias[trigger:planet_stability] == value_field[0.0..100.0]
 ###Checks the planet's size
@@ -605,7 +608,8 @@ alias[trigger:is_robot_pop_group] = bool
 
 ###Checks if the scoped fleet is an alliance fleet.
 alias[trigger:is_alliance_fleet] = bool
-###Checks if the planet is its owner's capital
+
+###Checks if the colony is its owner's capital
 alias[trigger:is_capital] = bool
 
 #alias[trigger:has_blocker] = bool #deprecated, I think
@@ -645,7 +649,7 @@ alias[trigger:check_variable] = {
 	value = value_field
 }
 
-###Checks the ship/fleet/planet/leader/pop group/system's galaxy map distance to target in absolute units
+###Checks the scoped object's galaxy map distance to target in absolute units
 alias[trigger:distance] = {
 	## cardinality = 0..1
 	source = scope_group[celestial_coordinate]
@@ -766,16 +770,16 @@ alias[trigger:fleet_size] == int_value_field
 ###Checks the game's difficulty level (0 to 6, with 0 as Civilian and 6 as Grand Admiral)
 alias[trigger:is_difficulty] == int_value_field[0..6]
 
-###Checks if the planet has any, or a specific, building
+###Checks if the colony has any, or a specific, building
 alias[trigger:has_building] = bool
 alias[trigger:has_building] = <building>
 
-###Checks if the planet has a specific building and that that building is neither disabled nor ruined
+###Checks if the colony has a specific building, and that that building is not disabled or ruined.
 alias[trigger:has_active_building] = <building>
 
-###Checks if the planet has any, or a specific, ongoing building construction
+###Checks if the colony has any, or a specific, ongoing building construction
 alias[trigger:has_building_construction] = bool
-###Checks if the planet has any, or a specific, ongoing building construction
+###Checks if the colony has any, or a specific, ongoing building construction
 alias[trigger:has_building_construction] = <building>
 
 ###Checks if an AI empire has a certain personality type
@@ -790,11 +794,11 @@ alias[trigger:has_country_resource] = {
 	type = <resource>
 	amount = value_field
 }
-###Checks if the planet has a specific amount of a specific resource
+###Checks if the colony carrier has a specific amount of a specific resource
 alias[trigger:has_resource] = <resource>
-###Checks if the planet has a specific amount of a specific resource
+###Checks if the colony carrier has a specific amount of a specific resource
 alias[trigger:has_resource] = bool
-###Checks if the planet has a specific amount of a specific resource
+###Checks if the colony carrier has a specific amount of a specific resource
 alias[trigger:has_resource] = {
 	type = <resource>
 	## cardinality = 0..1
@@ -805,7 +809,7 @@ alias[trigger:has_resource] = {
 	amount = enum[exe_set_variable]
 }
 
-###Checks if the planet has any strategic resource
+###Checks if the colony carrier or astral rift has any strategic resource
 alias[trigger:has_strategic_resource] = bool
 
 ###Checks the country's monthly income of a specific resource
@@ -814,11 +818,11 @@ alias[trigger:has_monthly_income] = {
 	value = value_field
 }
 
-###Checks if the planet has any, or a specific, deposit
+###Checks if the colony carrier has any, or a specific, deposit
 alias[trigger:has_deposit] = bool
 alias[trigger:has_deposit] = <deposit>
 
-###Checks if the planet has a deposit for a specific ship class
+###Checks if the colony carrier has a deposit for a specific ship class
 alias[trigger:has_deposit_for] = enum[shipsize_classes]
 
 ###Checks if the country has claims on the given country or system.
@@ -987,7 +991,7 @@ alias[trigger:has_anomaly] = bool
 ### Checks if the scope has a megastructure
 alias[trigger:has_any_megastructure] = bool
 
-### Checks if the planet has an army
+### Checks if the colony has an army
 alias[trigger:has_army] = bool
 
 ### Check if the country has federation association status with target country
@@ -1064,7 +1068,7 @@ alias[trigger:has_point_of_interest] = {
 }
 
 
-### Checks the number of deposits on the planet that meet the specified criteria. Not a scope change, does not call triggers
+### Checks the number of deposits on the colony carrier that meet the specified criteria. Not a scope change, does not call triggers
 alias[trigger:count_deposits] =  {
 	count = int_value_field
 	## cardinality = 0..1
@@ -1138,7 +1142,7 @@ enums = {
 	}
 }
 
-### Checks if the country has surveyed any planet of a specific class
+### Checks if the country has surveyed any colony carrier of a specific class
 alias[trigger:has_surveyed_class] = <planet_class>
 
 ### Checks if the country has a tech research option currently available
@@ -1288,7 +1292,7 @@ alias[trigger:is_scope_valid] = bool
 ### Checks if the pop/country's founder species is of a specific pre-defined species
 alias[trigger:is_species] = scalar #TODO species
 
-### Checks if the planet/system has been survey by target country
+### Checks if the scoped object has been surveyed by target country
 alias[trigger:is_surveyed] = {
 	who = scope_group[target_country]
 	status = bool
@@ -1331,13 +1335,13 @@ alias[trigger:max_starbase_capacity] == int_value_field
 ### Checks if the observation post has achieved specific progress in a mission
 alias[trigger:mission_progress] == value_field[0.0..1.0]
 
-### Checks the country's number of armies
+### Checks the country's or colony's number of armies
 alias[trigger:num_armies] == int_value_field
 
-### Checks the planet's total amount of energy
+### Checks the colony carrier's total amount of energy
 alias[trigger:num_energy] == int_value_field
 
-### Checks the planet's total amount of engineering research
+### Checks the colony carrier's total amount of engineering research
 alias[trigger:num_engineering] == int_value_field
 
 ### Checks the country's number of fleets
@@ -1352,13 +1356,13 @@ alias[trigger:num_killed_ships] = {
 ### Checks the number of marauder empires specified by the galaxy setup
 alias[trigger:num_marauder_empires_to_spawn] == int_value_field
 
-### Checks the planet's total amount of minerals
+### Checks the colony carrier's total amount of minerals
 alias[trigger:num_minerals] == value_field
 
 ### Checks the planet's number of modifiers
 alias[trigger:num_modifiers] == int_value_field
 
-### Checks the planet's total amount of physics research
+### Checks the colony carrier's total amount of physics research
 alias[trigger:num_physics] == int_value_field
 
 ### Checks the country's number of researched rare technologies
@@ -1367,7 +1371,7 @@ alias[trigger:num_rare_techs] == int_value_field
 ### Checks the country/fleet's number of ships
 alias[trigger:num_ships] == int_value_field
 
-### Checks the planet's total amount of society research
+### Checks the colony carrier's total amount of society research
 alias[trigger:num_society] == int_value_field
 
 ### Checks if the number of species on a planet, in an empire or in a pop faction is according to the argument. Does not count genetically modified species as unique.
@@ -1533,12 +1537,12 @@ alias[trigger:days_passed] == int_value_field
 ###Checks the planet's available amenities
 alias[trigger:free_amenities] == int_value_field
 
-###Checks if the country or planet has a deficit of the defined resource. Only populated planets can have deficits.
+###Checks if the country or colony carrier has a deficit of the defined resource. Only populated colonies can have deficits.
 alias[trigger:has_deficit] = <resource>
 
 alias[trigger:has_commercial_pact] = scope_group[target_country]
 
-###Checks specific resource stockpile for the country scope
+###Checks specific resource stockpile for the country/ship scope
 alias[trigger:resource_stockpile_compare] = {
 	resource = <resource>
 	value = value_field
@@ -1549,6 +1553,15 @@ alias[trigger:resource_stockpile_compare] = {
 	## cardinality = 0..1
 	multiplier = value_field
 }
+
+###Checks what fraction of the country's storage cap for a resource is currently filled (0.00-1.00).  Only valid for resources that use a maximum value.
+alias[trigger:resource_stockpile_percent] = {
+	resource = <resource>
+	value = value_field[0.0..1.0]
+}
+
+###Checks the used percentage (0.00-1.00) of the ship's or starbase's local stockpile capacity. If over capacity, returns 1.  For waystations, which have a separate capacity for each resource, only checks the resource with the highest percentage.
+alias[trigger:used_stockpile_capacity_percentage] = value_field[0.0..1.0]
 
 ###Checks specific resource income value for the country scope (note: checks profit minus loss, not revenue)
 alias[trigger:resource_income_compare] = {
@@ -1576,7 +1589,7 @@ alias[trigger:is_being_assimilated] = bool
 ###Checks the number of guaranteed colonies defined in setup
 alias[trigger:num_guaranteed_colonies] == int_value_field
 
-###Check if the planet has a branch office owned by target country/any country/no country
+###Check if the colony has a branch office owned by target country/any country/no country
 alias[trigger:has_branch_office] = scope_group[target_country]
 alias[trigger:has_branch_office] = bool
 
@@ -1598,7 +1611,7 @@ alias[trigger:branch_office_value] = {
 ###Checks the number of jobs compared to pops on the planet
 alias[trigger:free_jobs] == int_value_field
 
-###Checks the planet's devastation
+###Checks the colony's devastation
 alias[trigger:planet_devastation] == value_field[0.0..100.0]
 
 ###Checks if the pop group has the chosen pop category
@@ -1622,7 +1635,7 @@ alias[trigger:is_deposit_type] = <deposit>
 ###Checks if country has a built species defined
 alias[trigger:has_built_species] = bool
 
-###Checks the number the planet has of any, or a specific, building
+###Checks the number the scoped object has of any, or a specific, building
 alias[trigger:num_buildings] = {
 	type = any
 	type = <building>
@@ -1638,21 +1651,20 @@ alias[trigger:num_buildings] = {
 	## cardinality = 0..1
 	owner_type = enum[building_owner_type]
 	## cardinality = 0..1
-	## replace_scope = { this = planet root = planet }
+	## replace_scope = { this = colony root = colony }
 	limit = {
 		alias_name[trigger] = alias_match_left[trigger]
 	}
 }
 
-###Checks the number the planet has of any, or a specific, district
+###Checks the number the colony has of any, or a specific, district
 alias[trigger:num_districts] = {
 	type = any
 	type = <district>
 	value = int_value_field
 }
 
-###Checks the number of available slots the planet has of any, or a specific, district
-###Only works for uncapped districts as of 2.2.4
+###Checks the number of available slots the colony has of any, or a specific, district
 alias[trigger:num_free_districts] = {
 	type = any
 	type = <district>
@@ -1698,7 +1710,7 @@ alias[trigger:has_subject] = scope_group[target_country]
 ###Counts the number of sectors owned by the scoped country
 alias[trigger:num_sectors] == int_value_field
 
-###Checks the planet's number of slots available for new constructions
+###Checks the colony's number of slots available for new constructions
 alias[trigger:free_district_slots] == int_value_field
 
 ###Returns the country's acquired specimens count
@@ -1722,7 +1734,7 @@ alias[trigger:num_vivarium_slots] == int_value_field
 ###Checks if the country AI has any plans to expand
 alias[trigger:has_ai_expansion_plan] = bool
 
-###Checks if the planet has any, or a specific, district
+###Checks if the colony has any, or a specific, district
 alias[trigger:has_district] = <district>
 alias[trigger:has_district] = yes
 
@@ -1732,7 +1744,7 @@ alias[trigger:has_active_event] = {
 	<event>
 }
 
-###Checks the planet's number of slots available for new constructions
+###Checks the colony's number of slots available for new constructions
 alias[trigger:free_building_slots] == int_value_field
 
 ###Checks if species has specified archetype
@@ -1788,7 +1800,7 @@ alias[trigger:is_site_current_stage_score_no_die] == int_value_field
 ###Checks current excavator fleet.
 alias[trigger:is_site_last_excavator] = scope[fleet]
 
-###Checks the planet's total amount of uncleared blockers
+###Checks the colony carrier's total amount of uncleared blockers
 alias[trigger:num_uncleared_blockers] == int_value_field
 
 ###Checks whether the country has unlocked all traditions
@@ -1997,14 +2009,14 @@ alias[trigger:num_housing] == int_value_field
 ###Compares the number of planets in the current solar system
 alias[trigger:num_planets_in_system] == int_value_field
 
-###Checks if the current planet is the capital of its sector.
+###Checks if the colony is its sector's capital
 alias[trigger:is_sector_capital] = bool
 
-###Checks if the planet uses the specified district set.
+###Checks if the colony has the specified tag for district usage
 alias[trigger:uses_district_set] = <district>
 alias[trigger:uses_district_set] = enum[district_sets]
 
-###Compares the planet's production/upkeep or balance (default: balance) of a given resource with a specified value.
+###Checks specific resource value for scoped colony. Warning: performance-intensive trigger!
 alias[trigger:planet_resource_compare] = {
 	## cardinality = 0..1
 	###Default: Balance
@@ -2037,7 +2049,7 @@ alias[trigger:has_current_purge] = bool
 ###Checks if the current species has happiness or not when owned by a specified country.
 alias[trigger:species_has_happiness_with_owner] = scope_group[target_country]
 
-###Checks the number of pops the planet or country has that work a specific job.
+###Checks the number of pops the colony or country has that work a specific job.
 alias[trigger:num_assigned_jobs] = {
 	job = <job>
 	value = int_value_field
@@ -2380,7 +2392,7 @@ alias[trigger:is_in_sensor_range_of_country] = scope_group[target_country]
 ###Checks if the scoped situation's progress is a certain value.
 alias[trigger:situation_progress] == value_field
 
-###Checks if the scoped situation's monthly progress is a certain value. Returns the cached value from the last monthly tick.
+###Checks if the scoped situation's monthly progress is a certain value. Returns the cached value from the last monthly tick.  NOTE: does NOT take into account situation progress due to economy resource conversion.
 alias[trigger:situation_monthly_progress] == value_field
 
 ###Checks if the specified approach has been picked on the scoped situation.
@@ -2421,7 +2433,7 @@ alias[trigger:num_owned_leaders] == int_value_field
 ###Checks if scoped starbase would evaluate to be a certain starbase_type for its current owner.
 alias[trigger:is_starbase_type] = <starbase_type>
 
-###Checks if the planet's ascension tier is as specified.
+###Checks if the colony's ascension tier is as specified:
 alias[trigger:has_planetary_ascension_tier] == int_value_field
 
 ###Checks number of star systems in the galaxy
@@ -2442,7 +2454,7 @@ alias[trigger:check_economic_modifier_for_job] = {
 	species_modifiers_only = no
 }
 
-###Checks the planet's army strength (as calculated by all armies including offensive or defensive owned by its current controller). Warning: moderately intensive trigger
+###Checks the colony's army strength (as calculated by all armies including offensive or defensive owned by its current controller). Warning: moderately intensive trigger
 alias[trigger:planet_garrison_strength] == value_field
 
 ###Checks ratio between the country's income and expenditures for a specific resource. E.g. if it makes 80 energy and spends 100, its ratio is 0.8
@@ -3019,7 +3031,7 @@ alias[trigger:has_active_focus] = <focus_card_key>
 ###Checks if a country has a particular focus card completed
 alias[trigger:has_completed_focus] = <focus_card_key>
 
-###Checks the number the planet has of any, or a specific, zone
+###Checks the number the colony has of any, or a specific, zone
 alias[trigger:num_zones] = {
 	## cardinality = 0..1
 	type = <zones>
@@ -3124,8 +3136,13 @@ alias[trigger:has_patron_relation] = {
 ###Checks the Psionic Aura's intensity level inside the scoped system.
 alias[trigger:is_aura_intensity_level] = int
 
-###Checks if a planet's happiness is past a given threshold. Can be used in a scoped system, then it returns the sum of every planets' happiness past the given threshold.
+###Checks if a planet's happiness is past a given threshold. Can be used in a scoped system, then it returns the sum of every planets' happiness past the given threshold. In system scope an optional limit (colony scope) filters which colonies contribute.
 alias[trigger:planet_happiness_above_threshold] = { 
+	## cardinality = 0..1
+	## replace_scope = { this = colony root = colony }
+	limit = {
+		alias_name[trigger] = alias_match_left[trigger]
+	}
 	## cardinality = 0..1
 	threshold = value_field
 	## cardinality = 0..1
@@ -3141,11 +3158,16 @@ alias[trigger:num_neighbor_systems] = {
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 }
 
-###Checks how much workforce that has jobs with all given tags in a system
+###Checks how much workforce that has jobs with all given tags in a system. An optional limit (colony scope) filters which colonies contribute.
 alias[trigger:total_system_workforce_with_job_tag] = { 
 	tags = { 	
 		## cardinality = 0..inf
 		<job_tags>
+	}
+	## cardinality = 0..1
+	## replace_scope = { this = colony root = colony }
+	limit = {
+		alias_name[trigger] = alias_match_left[trigger]
 	}
 	value = int
 }
@@ -3233,3 +3255,83 @@ alias[trigger:can_be_crisis_terraformed] = bool
 
 ###Checks if the planet is currently being terraformed manually by script
 alias[trigger:is_scripted_terraforming] = bool
+
+###Checks the radius of the galaxy as it was calculated when generating the map.
+alias[trigger:galaxy_radius] == value_field
+
+###Check if the country has a Waystation Pact with target country
+alias[trigger:has_waystation_pact] = scope_group[target_country]
+
+###Checks max stockpile usage across all waystations in the network (0.0 to 1.0)
+alias[trigger:waystation_network_stockpile_used] == value_field[0.0..1.0]
+
+###Checks if the waystation has remote stockpile collection capability
+alias[trigger:waystation_has_remote_collection] = bool
+
+###Checks if any waystation in the network has remote stockpile collection capability
+alias[trigger:waystation_network_has_remote_collection] = bool
+
+###Checks the number of starbases in the same waystation network as the scoped starbase
+alias[trigger:starbase_network_size] == int_value_field
+
+###Checks if the country is nomadic
+alias[trigger:is_nomadic] = bool
+
+###Checks Fallen / Awakened Empire strength scaling in game setup
+alias[trigger:fallen_empire_strength_scale]  == value_field
+
+###Checks if the colony carrier has a specific flag
+alias[trigger:has_carrier_flag] = value[carrier_flag]
+
+###Checks if the mission has a specific flag
+alias[trigger:has_mission_flag] = value[mission_flag]
+
+###Checks if any fleet of the given fleet's controller (other than the given fleet itself) is currently executing a survey order targeting this planet/deposit holder.
+alias[trigger:is_being_surveyed] = { who = scope[fleet] }
+
+###Checks the number of waystation pacts the current country has.
+alias[trigger:num_waystation_pacts] = int
+
+###Returns true if the scoped mission is of type <type>
+alias[trigger:is_mission_type] = <mission_type>
+
+###Checks if the scoped fleet/carrier is locked in its current system.
+alias[trigger:is_system_locked] = bool
+
+###Checks the armor_ratio of the ai personality of the scoped country.
+alias[trigger:ai_armor_ratio]  == value_field
+
+###Checks the shields_ratio of the ai personality of the scoped country.
+alias[trigger:ai_shields_ratio]  == value_field
+
+###Checks the country's used starbase capacity in absolute numbers
+alias[trigger:used_starbase_capacity] == int_value_field
+
+###Count all currently available contracts to the scoped country
+alias[trigger:count_available_contracts] == int_value_field
+
+###Count all contracts visible to the scoped country (ie available and in progress)
+alias[trigger:count_visible_contracts] == int_value_field
+
+###Count all contracts currently in progress by the scoped country
+alias[trigger:count_contracts_in_progress] == int_value_field
+
+###Count all contracts issued by the scoped country (either available to be picked up or in progress by someone)
+alias[trigger:count_issued_contracts] == int_value_field
+
+###Checks if the job or pop group has the one of the unemployment pop categories
+alias[trigger:is_unemployed] = bool
+
+###Checks if the job or the pop group has the one of the civilian pop categories
+alias[trigger:has_civilian_job_category] = bool
+
+###Checks if the carrier is of a specific type
+alias[trigger:carrier_is_type] = planet
+###Checks if the carrier is of a specific type
+alias[trigger:carrier_is_type] = ship
+
+###Checks if the scoped country is working on a specific contract
+alias[trigger:has_contract] = <mission_type>
+
+###Checks if the scoped country is working on a contract of a certain category
+alias[trigger:has_contract_of_category] = <mission_categories>
