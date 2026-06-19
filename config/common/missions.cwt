@@ -1,7 +1,11 @@
 
+
 types = {
 	type[mission_type] = {
-		path = "game/common/missions"
+		path = "game/common/missions/missions"
+	}
+	type[mission_category_type] = {
+		path = "game/common/missions/mission_categories"
 	}
 }
 
@@ -52,6 +56,17 @@ mission_type = {
 		## cardinality = 0..inf
 		alias_name[effect] = alias_match_left[effect]
 	}
+}
+
+mission_category_type = {
+	## cardinality = 0..1
+	is_contract = yes
+	## cardinality = 0..1
+	map_icon = <sprite>
+	## cardinality = 0..1
+	log_icon = filepath
+	## cardinality = 0..1
+	show_in_issue_list = yes
 }
 
 enums = {
