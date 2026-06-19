@@ -77,15 +77,9 @@ alias[trigger:any_system_planet] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
 
-## push_scope = planet
-###Checks if any of the country's owned planets meet the specified criteria
-alias[trigger:any_owned_planet] = {
-	alias_name[trigger] = alias_match_left[trigger]
-}
-
-## push_scope = planet
-###Checks if any of the country's controlled planets meet the specified criteria
-alias[trigger:any_controlled_planet] = {
+## push_scope = colony
+###Iterate through each colony controlled by the current empire - checks whether the enclosed triggers return true for any of them
+alias[trigger:any_controlled_colony] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
 
@@ -156,7 +150,7 @@ alias[trigger:any_owned_army] = {
 }
 
 ## push_scope = army
-###Iterate through each defending army on a planet
+###Iterate through each army on the colony (not in ground combat), regardless of owner. - checks whether the enclosed triggers return true for any of them
 alias[trigger:any_planet_army] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
@@ -371,7 +365,7 @@ alias[trigger:count_owned_starbase] =  {
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 }
 
-### Iterate through each defending army on a planet
+###Iterate through each army on the colony (not in ground combat), regardless of owner. - checks whether the enclosed triggers return true for X/all of them
 alias[trigger:count_planet_army] =  {
 	count = all
 	count = int_value_field
@@ -646,25 +640,13 @@ alias[trigger:count_planet_within_border] = {
 	}
 }
 
-###Iterate through each inhabited planet owned by the current empire
-alias[trigger:count_owned_planet] = {
+###Iterate through each colony controlled by the current empire - checks whether the enclosed triggers return true for X/all of them
+alias[trigger:count_controlled_colony] = {
 	count = int_value_field
 	count = value[variable]
 	count = all
 	## cardinality = 0..1
-	## push_scope = planet
-	limit = {
-		alias_name[trigger] = alias_match_left[trigger]
-	}
-}
-
-###Iterate through each inhabited planet controlled by the current empire
-alias[trigger:count_controlled_planet] = {
-	count = int_value_field
-	count = value[variable]
-	count = all
-	## cardinality = 0..1
-	## push_scope = planet
+	## push_scope = colony
 	limit = {
 		alias_name[trigger] = alias_match_left[trigger]
 	}
@@ -3931,12 +3913,12 @@ alias[trigger:count_fleet_in_orbit] = {
 }
 
 ## push_scope = army
-###Iterate through each army currently defending the planet in ground combat - checks whether the enclosed triggers return true for any of them
+###Iterate through each army currently defending the colony in ground combat - checks whether the enclosed triggers return true for any of them
 alias[trigger:any_ground_combat_defender] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
 
-###Iterate through each army currently defending the planet in ground combat - checks whether the enclosed triggers return true for X/all of them
+###Iterate through each army currently defending the colony in ground combat - checks whether the enclosed triggers return true for X/all of them
 alias[trigger:count_ground_combat_defender] = {
 	count = all
 	count = int_value_field
@@ -3947,12 +3929,12 @@ alias[trigger:count_ground_combat_defender] = {
 }
 
 ## push_scope = army
-###Iterate through each army currently attacking the planet in ground combat - checks whether the enclosed triggers return true for any of them
+###Iterate through each army currently attacking the colony in ground combat - checks whether the enclosed triggers return true for any of them
 alias[trigger:any_ground_combat_attacker] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
 
-###Iterate through each army currently attacking the planet in ground combat - checks whether the enclosed triggers return true for X/all of them
+###Iterate through each army currently attacking the colony in ground combat - checks whether the enclosed triggers return true for X/all of them
 alias[trigger:count_ground_combat_attacker] = {
 	count = all
 	count = int_value_field
@@ -4640,23 +4622,53 @@ alias[effect:random_system_colony] = {
 	}
 }
 
-## push_scope = planet
-###Iterate through every colony in the system - checks whether the enclosed triggers return true for any of them
-alias[trigger:any_system_colony] = {
+## push_scope = colony
+###Iterate through each planet colony in the current system - checks whether the enclosed triggers return true for any of them
+alias[trigger:any_system_planet_colony] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
 
 ###Iterate through every colony in the system - checks whether the enclosed triggers return true for X/all of them
-alias[trigger:count_system_colony] = {
+alias[trigger:count_system_planet_colony] = {
 	count = all
 	count = int_value_field
 	count = value[variable]
 	## cardinality = 0..1
-	## push_scope = planet
+	## push_scope = colony
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 }
 
-# 3.6 "Orion"
+## push_scope = colony
+###Iterate through each ship colony in the current system - checks whether the enclosed triggers return true for any of them
+alias[trigger:any_system_ship_colony] = {
+	alias_name[trigger] = alias_match_left[trigger]
+}
+
+###Iterate through each ship colony in the current system - checks whether the enclosed triggers return true for X/all of them
+alias[trigger:count_system_ship_colony] = {
+	count = all
+	count = int_value_field
+	count = value[variable]
+	## cardinality = 0..1
+	## push_scope = colony
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+}
+
+## push_scope = colony
+###Iterate through each colony owned by the current empire - checks whether the enclosed triggers return true for any of them
+alias[trigger:any_owned_colony] = {
+	alias_name[trigger] = alias_match_left[trigger]
+}
+
+###Iterate through each colony owned by the current empire - checks whether the enclosed triggers return true for X/all of them
+alias[trigger:count_owned_colony] = {
+	count = all
+	count = int_value_field
+	count = value[variable]
+	## cardinality = 0..1
+	## push_scope = colony
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+}
 
 ## push_scope = archaeological_site
 ###Iterate through every archaeological sites - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
@@ -6036,4 +6048,69 @@ alias[effect:every_system_with_aura] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 	alias_name[effect] = alias_match_left[effect]
+}
+
+## push_scope = mission
+###Iterate through each mission a country has - checks whether the enclosed triggers return true for any of them
+alias[trigger:any_owned_mission] = { 
+	alias_name[trigger] = alias_match_left[trigger]
+}
+
+
+###Iterate through each mission a country has - checks whether the enclosed triggers return true for X/all of them
+alias[trigger:count_owned_mission] = {
+	count = all
+	count = int_value_field
+	count = value[variable]
+	## cardinality = 0..1
+	## push_scope = mission
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+}
+
+## push_scope = mission
+###Iterate through each mission that the current country has issued - checks whether the enclosed triggers return true for any of them
+alias[trigger:any_issued_mission] = { 
+	alias_name[trigger] = alias_match_left[trigger]
+}
+
+###Iterate through each mission that the current country has issued - checks whether the enclosed triggers return true for X/all of them
+alias[trigger:count_issued_mission] = {
+	count = all
+	count = int_value_field
+	count = value[variable]
+	## cardinality = 0..1
+	## push_scope = mission
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+}
+
+## push_scope = mission
+###Iterate through each contract a country has - checks whether the enclosed triggers return true for any of them
+alias[trigger:any_owned_contract] = { 
+	alias_name[trigger] = alias_match_left[trigger]
+}
+
+###Iterate through each contract a country has - checks whether the enclosed triggers return true for X/all of them
+alias[trigger:count_owned_contract] = {
+	count = all
+	count = int_value_field
+	count = value[variable]
+	## cardinality = 0..1
+	## push_scope = mission
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+}
+
+## push_scope = planet
+###Iterate through each planet controlled by the current empire - checks whether the enclosed triggers return true for any of them
+alias[trigger:any_controlled_planet] = { 
+	alias_name[trigger] = alias_match_left[trigger]
+}
+
+###Iterate through each planet controlled by the current empire - checks whether the enclosed triggers return true for X/all of them
+alias[trigger:count_controlled_planet] = {
+	count = all
+	count = int_value_field
+	count = value[variable]
+	## cardinality = 0..1
+	## push_scope = planet
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
 }
