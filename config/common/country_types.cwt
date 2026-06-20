@@ -150,35 +150,8 @@ country_type = {
 	prevent_automatic_genocidal_hostilities = bool
 	## cardinality = 0..1
 	faction = {
-		## cardinality = 0..1
-		neutral = bool
-		## cardinality = 0..1
-		hostile = bool
-		## cardinality = 0..1
-		follow = bool
-		## cardinality = 0..1
-		auto_delete = bool
-		## cardinality = 0..1
-		needs_border_access = bool
-		## cardinality = 0..1
-		generate_borders = bool
-		## cardinality = 0..1
-		needs_colony = bool
-		## cardinality = 0..1
-		primitive = bool
-		## cardinality = 0..1
-		primitive_age = <pre_ftl_age>
-		## cardinality = 0..1
-		hostile_when_attacked = bool
-		## cardinality = 0..1
-		show_borders_in_us = bool
-		## cardinality = 0..1
-		pirate = bool
-		## cardinality = 0..1
-		space_creatures = bool
-		## cardinality = 0..1
-		###Determines whether their planets are surveyable by others (should be "yes" for e.g. primitives)
-		intel_effects_surveyed = bool
+		## cardinality = 0..inf
+		enum[faction_properties]= bool
 	}
 
 	ai = {
@@ -399,5 +372,21 @@ enums = {
 		synth_queen_interior_minister_module
 		synth_queen_military_minister_module
 		voidworms_module
+	}
+	enum[faction_properties]= {
+		auto_delete
+		follow
+		generate_borders
+		hostile
+		hostile_when_attacked
+		intel_effects_surveyed
+		needs_border_access
+		needs_colony
+		neutral
+		pirate
+		primitive
+		primitive_age
+		show_borders_in_us
+		space_creatures
 	}
 }
