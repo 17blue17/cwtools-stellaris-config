@@ -4810,7 +4810,7 @@ count_war = {
 Supported Scopes: country
 
 =================
-[18:39:19][game_application.cpp:1392]: 
+[15:03:44][game_application.cpp:1400]: 
 == EFFECT DOCUMENTATION ==
 tooltip - Just a tooltip
 Supported Scopes: all
@@ -4843,28 +4843,24 @@ locked_random_list - Picks one random set of effects from a list, influenced by 
 locked_random_list = { 50 = { <effects> } 20 = { <effects> } 30 = { <effects> } 999 = { <effects> } }
 Supported Scopes: all
 
-remove_deposit - Remove resource deposit on the scoped planet or deposit, does not fire on_cleared if used on a blocker
+remove_deposit - Remove resource deposit on the scoped colony carrier or deposit, does not fire on_cleared if used on a blocker
 remove_deposit = <key/yes>
-Supported Scopes: planet deposit astral_rift
+Supported Scopes: planet ship deposit astral_rift colony
 
-add_blocker - Adds a blocker to a planet, with some control over what it is set to block (add_deposit will add a random planetary deposit to block)
+add_blocker - Adds a blocker to a colony carrier, with some control over what it is set to block (add_deposit will add a random planetary deposit to block)
 add_blocker = {
 	type = <key>
 	blocked_deposit = none (default)/<deposit scope - copies the type to the blocked deposit but any flags or variables are lost>/random
 }
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
-set_owner - Instantly sets the owner of the scoped planet/fleet/army/starbase to target country
+set_owner - Instantly sets the owner of the scoped object to target country
 set_owner = <target>
-Supported Scopes: megastructure planet fleet leader army starbase
+Supported Scopes: megastructure planet ship fleet leader army starbase colony
 
-unemploy_pop - Fires scoped pop from its job
-unemploy_pop = yes
-Supported Scopes: pop
-
-check_planet_employment - Immediately runs a job evaluation on the planet, firing and employing pops as needed
+check_planet_employment - Immediately runs a job evaluation on the colony, firing and employing pops as needed
 check_planet_employment = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 change_species_portrait - Changes the portrait of the species in scope.
 change_species_portrait = <key or species event target>
@@ -4878,13 +4874,13 @@ remove_random_building - Removes last built building from the scoped planet
 remove_random_building = yes
 Supported Scopes: planet
 
-remove_all_buildings - Removes all buildings from the scoped planet
+remove_all_buildings - Removes all buildings from the scoped colony
 remove_all_buildings = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 repair_all_buildings - Repairs all ruined buildings on the scoped planet
 repair_all_buildings = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 downgrade_all_buildings - Downgrades all non-capital buildings on the scoped planet/country. Leaves tier 1 buildings untouched.
 downgrade_all_buildings = yes
@@ -4894,23 +4890,23 @@ downgrade_buildings_of_type - Downgrades all buildings of a specified type on th
 downgrade_buildings_of_type = yes
 Supported Scopes: planet country
 
-validate_and_repair_planet_buildings_and_districts - Replace/removes all invalid (potential trigger not fulfilled) buildings and districts, then repairs all ruined buildings on the scoped planet
+validate_and_repair_planet_buildings_and_districts - Replace/removes all invalid (potential trigger not fulfilled) buildings and districts, then repairs all ruined buildings on the scoped colony
 validate_and_repair_planet_buildings_and_districts = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 remove_holding - Removes a specific holding from the scoped planet
 remove_holding = { holding = <key> owner = <owner> }
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
-add_holding - Begins construction of a specific holding on the scoped planet
+add_holding - Adds a specific holding on the scoped colony
 add_holding = { holding = <key> owner = <owner> }
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 give_technology - Instantly gives a specific tech to the scoped country
 give_technology = { tech = tech_desert_colonization message = yes }
 Supported Scopes: country
 
-add_building - Begins construction of a specific building on the scoped planet
+add_building - Adds a specific building on the scoped colony
 	add_building = <key>
 or
 	add_building = {
@@ -4918,15 +4914,15 @@ or
 		zone = <zone_type_key>
 		building = <building_type_key>
 	}
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
-ruin_building - Ruins a single instance of a specific building on the scoped planet
+ruin_building - Ruins a single instance of a specific building on the scoped colony
 ruin_building = <building_type_key>/random_no_capital
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
-disable_building - Disables a single instance of a specific building on the scoped planet
+disable_building - Disables a single instance of a specific building on the scoped colony
 disable_building = <building_type_key>
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 change_background_ethic - Changes the background ethic of a leader
 change_background_ethic = <key>
@@ -4938,7 +4934,7 @@ Supported Scopes: all
 
 add_planet_devastation - Instantly adds devastation to scoped planet
 add_planet_devastation = 5
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 set_immortal - Sets the scoped leader immortal. The 'no' case will not override immortality granted by species characteristics (but will disable immortality granted by this effect).
 set_immortal = yes
@@ -4954,15 +4950,15 @@ Supported Scopes: planet country
 
 establish_branch_office - Establish branch office on scoped planet for target country
 establish_branch_office = <target>
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 close_branch_office - Close branch office on scoped planet
 close_branch_office = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 clear_blockers - Removes all blockers from the scoped planet
 clear_blockers = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 set_built_species - Changes the built species of the scoped object
 set_built_species = <target>
@@ -4988,13 +4984,23 @@ set_country_flag - Sets an arbitrarily-named flag on the scoped country
 set_country_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
 Supported Scopes: country
 
-set_country_code_flags - Sets flags as used by code, not defined in script:
-set_country_code_flag = { some_flag_1 = yes some_flag_2 = no }
+set_country_code_flags - Sets bool flags as used by code, not defined in script:
+set_country_code_flags = { some_flag_1 = yes some_flag_2 = no }
+Supported flags: colonizer rebel track_all_situations custom_name is_in_breach_of_any has_advisor autopick_leader_traits crisis_fighter is_under_crisis_attack initialized is_affected_by_war_exhaustion is_nomadic killed
+Supported Scopes: country
+
+set_faction_properties - Sets country's faction properties:
+set_faction_properties = { some_flag_1 = yes some_flag_2 = no }
 Supported Scopes: country
 
 set_planet_flag - Sets an arbitrarily-named flag on the scoped planet
 set_planet_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
 Supported Scopes: planet
+
+set_carrier_flag - Sets an arbitrarily-named flag on the scoped colony carrier
+(Note: Colony doesn't store flags. Using any of the carrier_flag effects/triggers in colony scope will access flags in the colony carrier instead.)
+set_carrier_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
+Supported Scopes: planet ship colony
 
 set_fleet_flag - Sets an arbitrarily-named flag on the scoped fleet
 set_fleet_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
@@ -5007,6 +5013,10 @@ Supported Scopes: ship
 set_astral_rift_flag - Sets an arbitrarily-named flag on the scoped astral rift
 set_astral_rift_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
 Supported Scopes: astral_rift
+
+set_mission_flag - Sets an arbitrarily-named flag on the scoped mission
+set_mission_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
+Supported Scopes: mission
 
 remove_first_contact_flag - Removes a flag from the scoped first contact site
 remove_first_contact_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
@@ -5032,6 +5042,10 @@ remove_planet_flag - Removes a flag from the scoped planet
 remove_planet_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
 Supported Scopes: planet
 
+remove_carrier_flag - Removes a flag from the scoped colony carrier
+remove_carrier_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
+Supported Scopes: planet ship colony
+
 remove_fleet_flag - Removes a flag from the scoped fleet
 remove_fleet_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
 Supported Scopes: fleet
@@ -5043,6 +5057,10 @@ Supported Scopes: ship
 remove_astral_rift_flag - Removes a flag from the scoped astral rift
 remove_astral_rift_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
 Supported Scopes: astral_rift
+
+remove_mission_flag - Removes a flag from the scoped mission
+remove_mission_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
+Supported Scopes: mission
 
 create_species - Creates a new species. The habitability trait is determined by homeworld, traits = random, traits = { ideal_planet_class = <pc_XYZ> }, traits = <trait_pc_XYZ_preference>, or else is assigned randomly.
 create_species = {
@@ -5086,6 +5104,8 @@ create_country = {
 	city_graphical_culture = <culture_key>
 	ship_kinds = { <ship_category_keys> }
 	room = <room_texture_key>
+	nomadic = yes/no/<country_event_target> # default: no
+	remove_invalid_civics = yes/no # (default: no) drop copied civics that are not possible for the new empire
 }
 Supported Scopes: all
 
@@ -5093,13 +5113,17 @@ create_fleet - Creates a new fleet
 create_fleet = { name = <string> effect = { <create_ship, set_owner, set_location etc effects go here> } } 
 Supported Scopes: all
 
-create_random_fleet - Creates a new random fleet
+create_random_fleet - Creates a fleet of the requested size by repeatedly picking ships from the listed designs at random, weighted by each entry's weight (default 1). Each entry may also specify a guaranteed min count and a max cap. If ship_designs is omitted, falls back to the country's own AI-recruitable designs at uniform weight.
 create_random_fleet = {
 	name = <string>
 	size = <int>
 	can_overflow = yes/no # default yes
-	ship_designs = { NAME_a NAME_b } # Optional, only allow ships among these designs
-	effect = { <set_location etc effects go here> } }
+	ship_designs = { # optional; if omitted, uses the country's own designs at uniform weight
+		NAME_a # bare name, weight 1, no min/max
+		{ design = NAME_b weight = 2.4 min = 1 max = 3 }
+	}
+	effect = { <set_location etc effects go here> }
+}
 Supported Scopes: country
 
 create_army - Creates a new army
@@ -5109,7 +5133,7 @@ create_army = {
 	species = <target>/random
 	type = <key>
 }
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 modify_army - Modifies army with parameters:
 modify_army = {
@@ -5141,6 +5165,7 @@ create_ship = {
 	colonizer_species = <species, default: fleet owner founder species> age = <int> (optional)
 	rarity = <common/rare/epic/exceptional, used only if ship is space fauna> (optional, fallbacks to highest owned genetic material if applicable but not set)
 	growth_stage = <integer value between 1 and the amount of growth stages in the design> (optional, use the first growth stage by default)
+	create_colony = yes/no (default: yes; if yes, will also create the carrier colony,only when ship_size is marked to carry a colony. WARNING: carrier ships with no colony are killed on a daily basis)
 }
 Supported Scopes: fleet starbase
 
@@ -5152,20 +5177,10 @@ add_awareness - Adds awareness to the scoped (pre-FTL) country
 add_awareness = 12.3
 Supported Scopes: country
 
-create_pop - Adds pop size on the scoped planet
-create_pop = {
-	species = <target / key>
-	ethos = <random / <target country> / { ethic = <key> ethic = <key> }
-	size = <number> (optional, default: POP_BULK_UNIT_SIZE) }>
-	random = <number> (optional) If set, the amount will be randomized in [max(0, size - random), size + random].
-	growth_category = <key> (optional, default: 'GROWTH_CAT_OTHER')
-}
-Supported Scopes: planet
-
 create_pop_group - Creates a new pop group based on an existing one with overrides. If no existing pop group is passed, species is mandatory.
 create_pop_group = {
 	pop_group = <base pop group> (optional; if omitted, species is required)
-	species = last_created / <key> / <target> / random (optional; if omitted, base pop group is required)
+	species = last_created / <target> / random (optional; if omitted, base pop group is required)
 	ethos = { ethic = <key> } / random (optional; if no base group and no ethic is provided, ethos will be randomized)
 	category = <pop category> (optional; if omitted and no base group is defined, use category from first assigned job)
 	size = <number> (optional, default: POP_BULK_UNIT_SIZE)
@@ -5173,7 +5188,7 @@ create_pop_group = {
 	growth_category = <key> (optional, default: 'GROWTH_CAT_OTHER')
 	effect = <init effect> (optional)
 }
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 create_colony - Creates a colony on the scoped planet
 create_colony = {
@@ -5181,21 +5196,21 @@ create_colony = {
 	species = <target / key>
 	ethos = <random / target / { ethic = <key> ethic = <key> }>
 }
-Supported Scopes: planet
+Supported Scopes: planet ship
 
 set_capital - Sets the scoped planet to be the capital of its owner country
 set_capital = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 change_pc - Changes the class of the scoped planet
 change_pc = <class/random list>
 change_pc = { class = <class/random list> inherit_entity = yes }
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 start_terraform_process - Starts terraforming process of scoped planet
 start_terraform_process = <class/random list>
 start_terraform_process = { class = <class/random list> inherit_entity = yes }
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 set_star_class - Sets the star's star class, affecting system and galactic map graphics and potentially modifiers. Also changes the planet class of the system's primary star.
 set_star_class = <star class>
@@ -5210,9 +5225,9 @@ kill_pop_group = {
 }
 Supported Scopes: all
 
-destroy_colony - Destroys the colony on the scoped planet
+destroy_colony - Destroys the colony on the scoped carrier
 destroy_colony = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 add_experience - Adds a sum of experience points to the scoped leader
 add_experience = 200
@@ -5220,13 +5235,13 @@ Supported Scopes: leader
 
 set_ring - Adds or removes a planetary ring around the scoped planet
 set_ring = no
-Supported Scopes: planet
+Supported Scopes: planet ship
 
-create_mining_station - Creates a mining station in orbit of the scoped planet
+create_mining_station - Creates a mining station in orbit of the scoped planet or astral rift
 create_mining_station = { owner = <target> }
 Supported Scopes: planet astral_rift
 
-create_research_station - Creates a research station in orbit of the scoped planet
+create_research_station - Creates a research station in orbit of the scoped planet or astral rift
 create_research_station = { owner = <target> }
 Supported Scopes: planet astral_rift
 
@@ -5246,9 +5261,9 @@ remove_pop_group_flag - Removes a flag from the scoped pop group
 remove_pop_group_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
 Supported Scopes: pop_group
 
-set_name - Sets the name of the scoped country/planet/ship/fleet/leader/army/system/pop faction
+set_name - Sets the name of the scoped object
 set_name = <string>/<target>
-Supported Scopes: megastructure planet country ship fleet galactic_object leader army pop_faction war federation sector first_contact
+Supported Scopes: megastructure planet country ship fleet galactic_object leader army pop_faction war federation sector first_contact colony
 
 set_adjective - Sets the adjective of the scoped country
 set_adjective = <string>
@@ -5266,7 +5281,7 @@ add_modifier = {
 	time_multiplier = <variable> (optional: days/months/years value is multiplied by the value of this variable)
 	clear_on_owner_change = yes (optional: default no; clears modifier if planet/system/megastructure's owner changes)
 }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object pop_faction federation starbase spy_network espionage_operation astral_rift cosmic_storm_influence_field
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object pop_faction federation starbase spy_network espionage_operation astral_rift cosmic_storm_influence_field colony
 
 reduce_hp - Reduces the hull points of the scoped ship by a specific amount
 reduce_hp = 120
@@ -5280,9 +5295,11 @@ reduce_shield - Reduces the shield points of the scoped ship by a specific amoun
 reduce_shield = 120
 Supported Scopes: ship
 
-damage_ship - Damages ship by a specific amount
+damage_ship - Damages ship (or all ships in scoped fleet) by a specific amount
 damage_ship = 120
-Supported Scopes: ship
+Can also specify attacker (ship or country) for on-action attribution:
+damage_ship = { amount = 120 attacker = <ATTACKER SHIP OR COUNTRY> }
+Supported Scopes: ship fleet
 
 damage_army - Damages scoped army by a specific amount
 damage_army = 250
@@ -5292,9 +5309,9 @@ repair_ship - Restores all hull points to the scoped ship
 repair_ship = yes
 Supported Scopes: ship
 
-set_surveyed - Sets the planet/astral rift or system as un/surveyed by target country
+set_surveyed - Sets the colony carrier/astral rift or system as un/surveyed by target country
 set_surveyed = { surveyed = yes surveyor = <target> }
-Supported Scopes: planet galactic_object astral_rift
+Supported Scopes: planet ship galactic_object astral_rift
 
 set_visited - Sets the target system as 'visited' (i.e. low system intel on the map)
 set_visited = <target>
@@ -5305,28 +5322,29 @@ destroy_country = yes
 Supported Scopes: country
 
 set_variable - Sets or creates an arbitrarily-named variable with a specific value in the current scope
+(Note: Colony doesn't store variables. Using any of the variable effects/triggers in colony scope will access variables in the colony carrier instead.)
 set_variable = { which = <string> value = <float>/<variable>/<scope.variable>/trigger:<trigger> }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 clear_variable - Clears a previously-set variable from the game.
 clear_variable = <string>
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 round_variable - Rounds a previously-set variable to the closest integer.
 round_variable = <string>
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 floor_variable - Rounds a previously-set variable down to the previous integer.
 floor_variable = <string>
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 ceiling_variable - Rounds a previously-set variable up to the next integer.
 ceiling_variable = <string>
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 export_modifier_to_variable - Exports the value of a specified modifier in the current scope to a specified variable.
 export_modifier_to_variable = { modifier = logistic_growth_mult variable = <string> }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army species pop_faction
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army species pop_faction colony
 
 export_modifier_duration_to_variable - Exports the remaining duration of a specified modifier in the current scope to a specified variable.
 export_modifier_duration_to_variable = { modifier = modifier_name variable = <string> }
@@ -5339,7 +5357,7 @@ export_trigger_value_to_variable = {
 	variable = <string> (this example will print the amount of energy the scoped object has to a variable)
 	rounded = yes (default: no)
 }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 export_resource_stockpile_to_variable - Exports the value of the current country's stockpile of the specified resource to a variable.
 export_resource_stockpile_to_variable = { resource = energy variable = <string> }
@@ -5355,7 +5373,7 @@ Supported Scopes: country
 
 set_variable_to_random_value - Sets a variable to a random value within the specified bounds.
 set_variable_to_random_value = { which = <some_variable> min = -100 max = 100 rounded = yes/no }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 remove_global_flag - Removes a global flag
 remove_global_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
@@ -5367,7 +5385,7 @@ Supported Scopes: all
 
 change_variable - Increments a previously-set variable by a specific amount
 change_variable = { which = <string> value = <float>/<variable>/<scope.variable>/trigger:<trigger> }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 set_event_locked - Silently disables the scoped fleet to prevent player action, remember to unlock at the end of the event
 set_event_locked = no
@@ -5466,9 +5484,9 @@ Begin: set_spawn_system_batch = begin
 End: set_spawn_system_batch = end
 Supported Scopes: all
 
-spawn_system - Spawns a new system at a position relative to the scoped system/planet/ship.
+spawn_system - Spawns a new system at a position relative to the scoped object.
 spawn_system = { min_jumps = <value> max_jumps = <value> min_distance = <int 0-100> max_distance = <int 0-100> initializer = <key for pre-defined system>/random hyperlane=<yes/no> is_discovered=<yes/no>}
-Supported Scopes: megastructure planet ship fleet galactic_object starbase no_scope
+Supported Scopes: megastructure planet ship fleet galactic_object starbase no_scope colony
 
 create_nebula - Creates a new Nebula with a given radius centered around the current system.
 create_nebula = {
@@ -5492,7 +5510,7 @@ Supported Scopes: all
 
 save_global_event_target_as - Saves the current scope as an arbitrarily-named target to be referenced later, accessible globally until cleared
 save_global_event_target_as = <string>/<string@scope>
-Supported Scopes: all
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass design pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation debris astral_rift galactic_community exhibit pop job colony mission
 
 clear_global_event_target - Deletes the specified saved global target reference
 clear_global_event_target = <string>/<string@scope>
@@ -5595,6 +5613,7 @@ create_ambient_object = {
 	play_animation_once = yes/no
 	target = <target>
 	duration = <int, days>
+	is_wreck = yes/no
 }
 Supported Scopes: all
 
@@ -5643,7 +5662,7 @@ modify_species = {
 	sapient = <Y/N, determines if species is pre-sapient>
 	effect = { SCOPE_SPECIES } # optional effect to run on the resulting new species, is executed after any handling of change_scoped_species
 }
-Supported Scopes: planet country pop pop_group leader species
+Supported Scopes: planet country ship pop pop_group leader species colony
 
 add_opinion_modifier - Adds a specific opinion modifier for the scoped country towards target country
 add_opinion_modifier = { modifier = <key> who = <target> }
@@ -5680,9 +5699,9 @@ set_disable_at_health - Sets the scoped ship to become disabled at a certain hul
 set_disable_at_health = <0-1 float> | no
 Supported Scopes: ship fleet
 
-remove_building - Removes a single instance of a specific building from the scoped planet
+remove_building - Removes a single instance of a specific building from the scoped colony
 	remove_building = <building_type_key>
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 add_zone - Adds zone to the district of the planet
 add_zone = {
@@ -5691,11 +5710,11 @@ add_zone = {
 	zone_slot = <zone_slot_index>
 	replace = <yes/no>
 }
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 change_planet_size - Increases or reduces the size of the scoped planet by a specified amount
 change_planet_size = <+/- int>
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 set_policy_cooldown - Sets the specified policy group to have a cooldown as if the policy had just been changed.
 set_policy_cooldown = <policy group e.g. diplomatic_stance>
@@ -5727,7 +5746,7 @@ remove_relation_flag = {
 }
 Supported Scopes: country
 
-kill_leader - Kills the scoped leader or leader of the scoped country/fleet/ship/planet/army/first contact system/spy network
+kill_leader - Kills the scoped leader or leader of the scoped object
 kill_leader = {
 	class = <key, optional, if left out will kill scoped leader, can be used multiple times>
 	ability = <key, optional, see leader class for list of abilities, will kill leader that has this ability, can be used multiple times>
@@ -5736,11 +5755,11 @@ kill_leader = {
 	heir = <yes, optional, if added to type = ruler, will kill heir instead>
 	fire = yes (default: no; if yes, fires on_leader_fired instead of on_leader_death
 }
-Supported Scopes: planet country ship fleet leader army
+Supported Scopes: planet country ship fleet leader army colony
 
-assign_leader - Assigns target leader to the scoped country/fleet/army/
+assign_leader - Assigns target leader to the scoped object
 assign_leader = <target>
-Supported Scopes: planet country fleet army
+Supported Scopes: planet country ship fleet army colony
 
 set_years_served - Copies years served duration from the target
 set_years_served = <target>
@@ -5809,6 +5828,13 @@ set_timed_planet_flag = {
 	days/months/years = <int>/<variable>
 }
 Supported Scopes: planet
+
+set_timed_carrier_flag - Sets an arbitrarily-named flag on the scoped colony carrier for a set duration
+set_timed_carrier_flag = { 
+	flag = <key> (note: one can use <key>@scope e.g. my_flag@from to track relationships between objects)
+	days/months/years = <int>/<variable>
+}
+Supported Scopes: planet ship colony
 
 set_timed_pop_flag - Sets an arbitrarily-named flag on the scoped pop for a set duration
 set_timed_pop_flag = {
@@ -5907,11 +5933,11 @@ set_saved_date = {
 	days_from_present = <int>/<variable> (time until the date you wish to save)
 	expires = <int>/<variable> (time until the saved date is cleared, default is never)
 }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 remove_modifier - Removes a specific modifier from the scope object
 remove_modifier = <key>
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object pop_faction federation starbase spy_network espionage_operation astral_rift cosmic_storm_influence_field
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object pop_faction federation starbase spy_network espionage_operation astral_rift cosmic_storm_influence_field colony
 
 add_ship_design - Adds a specific ship design to the scoped country
 add_ship_design = <target/last_created_design>
@@ -5946,7 +5972,7 @@ Supported Scopes: pop pop_group
 
 set_graphical_culture - Sets the scoped object's graphical culture
 set_graphical_culture = <key>
-Supported Scopes: megastructure country starbase
+Supported Scopes: megastructure country ship fleet starbase
 
 set_formation_scale - Scales the scoped fleet's formation's ship spacing, above and below 1.0
 set_formation_scale = <float>
@@ -5954,7 +5980,7 @@ Supported Scopes: fleet
 
 set_controller - Instantly sets the planet/fleet's controller to target country. If the fleet is a starbase, starts occupation, otherwise the fleet is leased out.
 set_controller = <target>
-Supported Scopes: planet fleet
+Supported Scopes: planet ship fleet colony
 
 force_faction_evaluation - Forces target pop group to immediately evaluate their attraction to various pop factions
 force_faction_evaluation = yes
@@ -6106,30 +6132,30 @@ start_colony = {
 	species = <target / key>
 	ethos = <random / target / { ethic = <key> ethic = <key> }>
 }
-Supported Scopes: planet
+Supported Scopes: planet ship
 
 subtract_variable - Decrements a previously-set variable by a specific amount
 subtract_variable = { which = <string> value = <float>/<variable>/<scope.variable>/trigger:<trigger> }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 multiply_variable - Multiplies a previously-set variable by a specific amount
 multiply_variable = { which = <string> value = <float>/<variable>/<scope.variable>/trigger:<trigger> }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 divide_variable - Divides a previously-set variable by a specific amount
 divide_variable = { which = <string> value = <float>/<variable>/<scope.variable>/trigger:<trigger> }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 modulo_variable - Modulos a previously-set variable by a specific amount i.e. X % Y
 modulo_variable = { which = <string> value = <float>/<variable>/<scope.variable>/trigger:<trigger> }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 round_variable_to_closest - Rounds a previously-set variable to the closest X
 round_variable_to_closest = {
 	which = <string>
 	value = <float>/<variable>/<scope.variable>/trigger:<trigger> (variable will be rounded to a multiple of this value)
 }
-Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage
+Supported Scopes: megastructure planet country ship pop pop_group fleet galactic_object leader army ambient_object species bypass pop_faction war federation starbase deposit sector archaeological_site first_contact spy_network espionage_operation espionage_asset agreement situation astral_rift ship_growth_stage colony
 
 play_sound - Play the defined sound effect
 play_sound = myfirstsoundeffect
@@ -6152,7 +6178,11 @@ force_add_civic = <civic>
 Supported Scopes: country
 
 force_remove_civic - Removes civic from a government without checking the restrictions
-force_remove_civic = <civic>/2
+force_remove_civic = <civic>
+Supported Scopes: country
+
+force_remove_civic_by_index - Removes civic from a government without checking the restrictions
+force_remove_civic_by_index = 2
 Supported Scopes: country
 
 set_origin - Sets the country's origin to a certain value. Note: This will not run effects executed during galaxy generation.
@@ -6191,7 +6221,7 @@ Supported Scopes: country
 
 add_threat - Adds diplomatic threat from target country
 add_threat = { who = <country> amount = 4/variable }
-Supported Scopes: planet country galactic_object
+Supported Scopes: planet country ship galactic_object colony
 
 set_mission - Sets the current mission of an observation station
 set_mission = passive_observation
@@ -6262,7 +6292,7 @@ Supported Scopes: all
 
 set_deposit - Replaces resource deposit on the scoped planet
 set_deposit = <key/random>
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 randomize_flag_symbol - Randomizes a country's flag symbol within the selected category
 randomize_flag_symbol = pirate
@@ -6295,11 +6325,11 @@ Supported Scopes: country
 
 reroll_planet_modifiers - Rebuild modifiers on target planet
 reroll_planet_modifiers = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
-reroll_deposits - Rebuild resource deposits on target planet
+reroll_deposits - Rebuild resource deposits on target colony carrier
 reroll_deposits = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 delete_fleet - Deletes the target fleet (no death graphics)
 delete_fleet = <target>
@@ -6369,7 +6399,14 @@ set_fleet_formation = { position = { x = 1 y = 1 } position = { x = 2 y = 1 } }
 Supported Scopes: fleet
 
 create_message - Creates a message, can take multiple variables
-create_message = { type = BYPASS_EXPLORED localization = BYPASS_EXPLORED_MESSAGE days = 30 (-1 is infinite) target = root  variable = { type = name localization = SYSTEM1 scope = from } variable = { type = name localization = SYSTEM2 scope = fromfrom } }
+create_message = {
+  type = BYPASS_EXPLORED
+  localization = BYPASS_EXPLORED_MESSAGE
+  days = 30 (-1 is infinite)
+  target = root
+  variable = { type = name localization = SYSTEM1 scope = from }
+  variable = { type = name localization = SYSTEM2 scope = fromfrom }
+}
 Supported Scopes: all
 
 set_halted - Sets the mega structure upgrade to halted status for n days. -1 days = indefinitely
@@ -6389,11 +6426,11 @@ set_planet_entity = {
 	atmosphere_intensity = <0.0 - 1.0>
 	atmosphere_width = <0.0 - 1.0> 
 }
-Supported Scopes: planet
+Supported Scopes: planet ship
 
 remove_planet - Removes the planet from the scope 
 remove_planet = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 set_megastructure_flag - Sets an arbitrarily-named flag on the scoped mega structure
 set_megastructure_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
@@ -6429,10 +6466,6 @@ Supported Scopes: leader
 change_leader_class - Changes the class of the leader in scope.
 change_leader_class = <leader class event target>
 Supported Scopes: leader
-
-resettle_pop - Instantly resettles pop
-resettle_pop = { pop = <target pop> planet = <target planet> tile = <target tile> }
-Supported Scopes: all
 
 set_citizenship_type - Set citizenship type for scoped species/pop group/leader
 set_citizenship_type = { country = <target> type = citizenship_full cooldown = yes }
@@ -6484,11 +6517,11 @@ Supported Scopes: country pop pop_group
 
 clear_planet_modifiers - Clear modifiers on target planet
 clear_planet_modifiers = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
-remove_all_armies - Removes all armies on scoped planet
+remove_all_armies - Removes all armies on scoped colony
 remove_all_armies = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 mutate_species - Randomly mutate a species.
 mutate_species = yes
@@ -6633,18 +6666,18 @@ Supported Scopes: country
 
 get_galaxy_setup_value - Copies a value from the galaxy setup into a variable, optionally scaling it by an int value
 get_galaxy_setup_value = { which = <string> setting = <string> [ scale_by = <float> ] }
-possible values: num_empires, num_advanced_empires, num_fallen_empires, num_marauder_empires, mid_game_year, end_game_year, victory_year, num_guaranteed_colonies, num_gateways, num_wormhole_pairs, num_hyperlanes, habitable_worlds_scale, primitive_worlds_scale, crisis_strength_scale, tech_costs_scale
+possible values: num_empires, num_advanced_empires, num_fallen_empires, num_marauder_empires, mid_game_year, end_game_year, victory_year, num_guaranteed_colonies, num_gateways, num_wormhole_pairs, num_hyperlanes, habitable_worlds_scale, primitive_worlds_scale, crisis_strength_scale, tech_costs_scale, fallen_empire_strength_scale
 Supported Scopes: all
 
 finish_upgrade - Finish the current upgrade of a Mega Structure.
 finish_upgrade = yes
 Supported Scopes: megastructure
 
-effect_on_blob - Executes an effect on systems with planets owned by the scoped country, starting at an origin, and until a certain percentage of owned planets matching the planet_limit has been covered.
+effect_on_blob - Executes an effect on systems with colonies owned by the scoped country, starting at an origin, and until a certain percentage of owned colonies matching the planet_limit has been covered.
 effect_on_blob = {
 	center = <system target>
 	owned_planets_percentage = 1.0/variable
-	planet_limit = { <planet triggers> }
+	planet_limit = { <colony triggers> }
 	effect = { <system effects> }
 }
 Supported Scopes: country
@@ -6771,17 +6804,17 @@ Supported Scopes: fleet
 
 remove_random_district - Removes a random district from the scoped planet. Bigger district is more likely to be removed.
 remove_random_district = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
-remove_all_districts - Removes all districts from the scoped planet
+remove_all_districts - Removes all districts from the scoped colony
 remove_all_districts = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
-remove_district - Removes a specific district from the scoped planet
+remove_district - Removes a specific district from the scoped colony
 remove_district = <key>
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
-add_district - Begins construction of a specific district on the scoped planet
+add_district - Adds a specific district on the scoped colony
 add_district = <key>
 or
 add_district = {
@@ -6789,7 +6822,7 @@ add_district = {
 	ignore_cap = <yes/no> #default no
 	type_conversion = <yes/no> #default no
 }
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 enable_on_market - Enables a resource on the Galactic Market
 enable_on_market = <resource_key>
@@ -6803,13 +6836,13 @@ add_timed_trait - Adds a specific trait to the scoped leader for a specific dura
 add_timed_trait = { trait = <trait> days/months/years = <value>/<variable> }
 Supported Scopes: leader
 
-set_planetary_ascension_tier - Sets the planet's ascension tier to the specified value
+set_planetary_ascension_tier - Sets the colony's ascension tier to the specified value
 set_planetary_ascension_tier = 3
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 create_archaeological_site - Creates a archaeological site associated with the scope object
 create_archaeological_site = <site type>
-Supported Scopes: megastructure planet ship fleet galactic_object ambient_object starbase debris astral_rift
+Supported Scopes: megastructure planet ship fleet galactic_object ambient_object starbase debris astral_rift colony
 
 destroy_archaeological_site - Destroys a archaeological site in right hand site event target
 destroy_archaeological_site = <event target>
@@ -6915,7 +6948,7 @@ country_list_tooltip - Prints a list of the countries that match the limit trigg
 country_list_tooltip = { limit = { <triggers> } }
 Supported Scopes: all
 
-owned_planet_list_tooltip - Prints a list of the country's planets that match the limit triggers in a tooltip, each separated by a line break.
+owned_planet_list_tooltip - Prints a list of the country's colonies that match the limit triggers in a tooltip, each separated by a line break.
 owned_planet_list_tooltip = { limit = { <triggers> } }
 Supported Scopes: country
 
@@ -7027,13 +7060,13 @@ add_loyalty - Add loyalty to subject of an agreement
 add_loyalty = 5
 Supported Scopes: agreement
 
-set_sector_capital - Sets the scoped planet to be the capital of the sector it is part of. If used in the capital sector, it will shift the empire capital. Warning: Experimental, may have unintended consequences.
+set_sector_capital - Sets the scoped colony to be the capital of the sector it is part of. If used in the capital sector, it will shift the empire capital. Warning: Experimental, may have unintended consequences.
 set_sector_capital = yes
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 set_colony_type - Sets the colony's designation type
 set_colony_type = <colony type>
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 set_male_ruler_title - Sets the country's male ruler title to a custom value
 set_male_ruler_title = "Grand Executioner"
@@ -7094,6 +7127,10 @@ Supported Scopes: fleet
 
 set_mia_return_delay - If the scoped fleet is MIA, sets the return date in a given number of days, starting from current date
 set_mia_return_delay = <int>
+Supported Scopes: fleet
+
+return_from_mia - If the target fleet is MIA, returns it from MIA immediately
+return_from_mia = <target>
 Supported Scopes: fleet
 
 create_espionage_asset - Creates espionage asset within a given spy network
@@ -7239,7 +7276,7 @@ Supported Scopes: situation
 
 change_situation_target - Changes the target of a Situation.
 change_situation_target = none/scope
-Supported Scopes: any
+Supported Scopes: situation
 
 pass_targeted_resolution - Immediately passes the first found (oldest) proposed/voting for/failed resolution OR a new resolution of this type that has the specified target. Ignores whether the target is valid or not.
 pass_targeted_resolution = { resolution = <resolution type> target = <target>
@@ -7409,7 +7446,7 @@ Supported Scopes: all
 
 create_cosmic_storm_influence_field - Creates a storm influence field in a certain radius
 radius = <float>
-Supported Scopes: planet starbase
+Supported Scopes: planet ship starbase colony
 
 destroy_cosmic_storm_influence_field - Destroys a storm influence field with center
  center = <target>
@@ -7457,9 +7494,13 @@ finish_council_agenda - Tries to finish the current council agenda for the scope
 finish_council_agenda = yes/no
 Supported Scopes: country
 
-add_mission_counter - Increments (or decrements with negative values) a mission counter for the scoped country by a specific amount
-add_mission_counter = { mission = <key> counter = <key> amount = <int>/<variable> }
-Supported Scopes: country
+add_mission_counter - Increments (or decrements with negative values) a mission counter for the scoped country or scoped mission by a specific amount
+add_mission_counter = {
+	mission = <key> # not needed if in a mission scope
+	counter = <key>
+	amount = <int>/<variable>
+}
+Supported Scopes: country mission
 
 set_storm_flag - Sets an arbitrarily-named flag on the scoped cosmic storm.
 set_storm_flag = <key> (note: one can use e.g. my_flag@from to track relationships between objects)
