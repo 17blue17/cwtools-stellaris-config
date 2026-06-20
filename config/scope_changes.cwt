@@ -198,7 +198,7 @@ alias[trigger:any_owned_pop_species] = {
 }
 
 ## push_scope = starbase
-###Iterate through every owned primary starbase
+###Iterate through every owned primary starbase (i.e. the starbase that claims ownership of a system). - checks whether the enclosed triggers return true for any of them
 alias[trigger:any_owned_starbase] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
@@ -355,7 +355,7 @@ alias[trigger:count_owned_pop_species] =  {
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 }
 
-### Iterate through every owned primary starbase
+###Iterate through every owned primary starbase (i.e. the starbase that claims ownership of a system). - checks whether the enclosed triggers return true for X/all of them
 alias[trigger:count_owned_starbase] =  {
 	count = all
 	count = int_value_field
@@ -2278,10 +2278,8 @@ alias[effect:random_pool_leader] = {
 	}
 }
 
-#2.2
-
 ## push_scope = deposit
-###Checks if any deposits on the planet meet the criteria
+###Iterate through each deposit on the colony carrier - checks whether the enclosed triggers return true for any of them
 alias[trigger:any_deposit] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
@@ -2330,7 +2328,7 @@ alias[effect:random_deposit] = {
 	}
 }
 
-###Iterate through he planet's deposits
+###Iterate through each deposit on the colony carrier - checks whether the enclosed triggers return true for X/all of thems
 alias[trigger:count_deposit] = {
 	count = all
 	count = int_value_field
@@ -2601,12 +2599,12 @@ alias[effect:ordered_galaxy_species] = {
 }
 
 ## push_scope = species
-###Iterate through each species belonging to the country/planet
+###Check if any of the species in the current scope meet the specified criteria - checks whether the enclosed triggers return true for any of them
 alias[trigger:any_owned_species] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
 
-###Iterate through each species belonging to the country/planet
+###Check if any of the species in the current scope meet the specified criteria - checks whether the enclosed triggers return true for X/all of them
 alias[trigger:count_owned_species] = {
 	##cardinality = 0..1
 	## push_scope = species
@@ -2661,12 +2659,12 @@ alias[effect:ordered_owned_species] = {
 }
 
 ## push_scope = species
-###Iterate through each species enslaved by the country/planet
+###Check if any of the species with enslaved pops in the current scope meet the specified criteria - checks whether the enclosed triggers return true for any of them
 alias[trigger:any_enslaved_species] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
 
-###Iterate through each species enslaved by the country/planet
+###Check if any of the species with enslaved pops in the current scope meet the specified criteria - checks whether the enclosed triggers return true for X/all of them
 alias[trigger:count_enslaved_species] = {
 	##cardinality = 0..1
 	## push_scope = species
@@ -4321,12 +4319,12 @@ alias[effect:random_targeting_situation] = {
 }
 
 ## push_scope = situation
-###Iterate through each situation that is targeting the current planet - checks whether the enclosed triggers return true for any of them
+###Iterate through each situation that is targeting the current colony carrier - checks whether the enclosed triggers return true for any of them
 alias[trigger:any_targeting_situation] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
 
-###Iterate through each situation that is targeting the current planet - checks whether the enclosed triggers return true for X/all of them
+###Iterate through each situation that is targeting the current colony carrier - checks whether the enclosed triggers return true for X/all of them
 alias[trigger:count_targeting_situation] = {
 	count = all
 	count = int_value_field
@@ -4563,12 +4561,12 @@ alias[effect:random_owned_nonprimary_starbase] = {
 }
 
 ## push_scope = starbase
-###Iterate through every owned non-primary starbase (e.g. orbital rings), not including juggernauts - checks whether the enclosed triggers return true for any of them
+###Iterate through every owned non-primary starbase (e.g. orbital rings, deep space citadels, or waystations). This does not return mobile starbases (e.g. juggernauts or arkships). - checks whether the enclosed triggers return true for any of them
 alias[trigger:any_owned_nonprimary_starbase] = {
 	alias_name[trigger] = alias_match_left[trigger]
 }
 
-###Iterate through every owned non-primary starbase (e.g. orbital rings), not including juggernauts - checks whether the enclosed triggers return true for X/all of them
+###Iterate through every owned non-primary starbase (e.g. orbital rings, deep space citadels, or waystations). This does not return mobile starbases (e.g. juggernauts or arkships). - checks whether the enclosed triggers return true for X/all of them
 alias[trigger:count_owned_nonprimary_starbase] = {
 	count = all
 	count = int_value_field
@@ -6107,6 +6105,22 @@ alias[trigger:any_controlled_planet] = {
 
 ###Iterate through each planet controlled by the current empire - checks whether the enclosed triggers return true for X/all of them
 alias[trigger:count_controlled_planet] = {
+	count = all
+	count = int_value_field
+	count = value[variable]
+	## cardinality = 0..1
+	## push_scope = planet
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+}
+
+## push_scope = starbase
+###Iterate through every starbase in the same waystation network as the scoped starbase. - checks whether the enclosed triggers return true for any of them
+alias[trigger:any_starbase_in_network] = { 
+	alias_name[trigger] = alias_match_left[trigger]
+}
+
+###Iterate through every starbase in the same waystation network as the scoped starbase. - checks whether the enclosed triggers return true for X/all of them
+alias[trigger:count_starbase_in_network] = {
 	count = all
 	count = int_value_field
 	count = value[variable]
