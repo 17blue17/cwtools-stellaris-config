@@ -557,9 +557,6 @@ alias[trigger:years_passed] == int_value_field
 ###Checks the country's or sector's number of owned colonies (includes both planet and ship colonies).  NOTE: replaces num_owned_planets.
 alias[trigger:num_owned_colonies] == int_value_field
 
-###ERROR:  Deprecated: use num_owned_colonies instead
-alias[trigger:num_owned_planets] = use_num_owned_colonies_instead
-
 ###Compares the stability present on the planet with the given value
 alias[trigger:planet_stability] == value_field[0.0..100.0]
 ###Checks the planet's size
@@ -3335,3 +3332,26 @@ alias[trigger:has_contract] = <mission_type>
 
 ###Checks if the scoped country is working on a contract of a certain category
 alias[trigger:has_contract_of_category] = <mission_categories>
+
+###Counts the number of claims the scoped empire has on the target system
+alias[trigger:num_claims_on_system] = { 
+	Target = scope_group[target_country]
+	Count = int_value_field
+}
+
+###Returns the hostile military power in the system (galactic_object scope) as perceived by the given country, optionally multiplied by ENEMY_FLEET_POWER_MULT as a safety buffer.
+alias[trigger:hostile_military_power] = { 
+	who = scope_group[target_country]
+	safety_buffer = bool
+	value = int_value_field
+}
+
+###ERROR:  Deprecated: use num_owned_colonies instead
+alias[trigger:num_owned_planets] = Deprecated
+
+###ERROR:  Deprecated: use owned_colony instead
+alias[any_owned_planet] = Deprecated
+
+###ERROR:  Deprecated: use owned_colony instead
+alias[count_owned_planet] = Deprecated
+
