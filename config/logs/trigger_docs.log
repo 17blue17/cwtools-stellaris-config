@@ -7511,8 +7511,8 @@ set_mission_counter = { mission = <key> counter = <key> amount = <int>/<variable
 Supported Scopes: country
 
 stop_mission - Stops the mission with the given status, triggering the relevant effects.
- stop_mission = { mission = <mission_key> status = success }
-Supported Scopes: planet country ship pop pop_group
+stop_mission = { mission = <mission_key> status = success }
+Supported Scopes: country
 
 give_culling_rewards - Gives associated culling rewards from a space fauna design to the target country.
 give_culling_rewards = {
@@ -7539,13 +7539,18 @@ spawn_custom_debris - Spawns a custom debris project with the current fleet.
 spawn_custom_debris = {	
 	for = <country> - country to give the debris project to.
 	should_add_ship_to_debris = trigger (optional) - used to check if the ship must be added to the debris.
-	must_scavenge/must_research = yes/no (default no) - used to specify and override country behaviour towards this debris.
+	must_scavenge/must_reanimate/must_research = yes/no (default no) - used to specify and override country behaviour towards this debris. (Note: must_scavenge is always set to true if the killed ship stockpile is not empty.)
 	reset_killed_ship_designs = yes/no (default no) - used to force the fleet to reset its killed ships designs.
+	reset_killed_ship_stockpile = yes/no (default no) - used to force the fleet to reset its killed ships stockpile.
+	Note: Killed ship designs and stockpile are always reset at the end of combat, but after on_fleet_exit_battle has fired.
 }
 Supported Scopes: fleet
 
-select_decision - Selects a decision on a planet
-Supported Scopes: planet
+Selects a decision on a colony carrier
+select_decision = {
+	name = <decision>
+}
+Supported Scopes: planet ship colony
 
 return_leader_from_exile - Returns the leader from a custom name
 return_leader_from_exile = <key>/<key@scope>
@@ -7593,7 +7598,7 @@ steal_specimens - Steals random specimens from given country.
 steal_specimens = { who = <country> category = <category_key>/all/any count = <int>show_nofication = <yes/no> }
 Supported Scopes: country
 
-release_vivarium_fauna - Releases into the wild space fauna contained in the scoped country's Vivarium, from all or given ship category.	Resulting fleet owner can be specified.	Space Fauna can be culled for resources instead by specifying 'cull_vivarium_critter = yes'.
+release_vivarium_fauna - Releases into the wild space fauna contained in the scoped country's Vivarium, from all or given ship category. Resulting fleet owner can be specified.	Space Fauna can be culled for resources instead by specifying 'cull_vivarium_critter = yes'.
 release_vivarium_fauna = { category = <ship_category>/all location = <target> owner = <country>cull_vivarium_critter = <yes/no> }
 Supported Scopes: country
 
@@ -7641,14 +7646,6 @@ refuse_covenant - Refuses covenant proposition with Shroud Patron.
 refuse_covenant = <patron_name>
 Supported Scopes: country
 
-set_faction_needs_colony - Sets if a country needs a colony (or a colony ship) to be considered alive
-set_faction_needs_colony = yes
-Supported Scopes: country
-
-set_faction_auto_delete - Sets if country will be automatically deleted when considered dead
-set_faction_auto_delete = yes
-Supported Scopes: country
-
 add_patron_objective_counter - Increments (or decrements with negative values) a patron objective counter for the scoped country by a specific amount. Can multiply the attunement given by the patron objective (if it's a deed).
 add_patron_objective_counter = {
 	counter = <key>
@@ -7684,11 +7681,11 @@ Supported Scopes: country
 
 remove_tradition - Remove the target tradition from the scoped Country.
 remove_tradition = tradition_key
-Supported Scopes: planet country ship pop pop_group
+Supported Scopes: all
 
 remove_tradition_tree - Remove the target tradition tree from the scoped Country.
 remove_tradition_tree = tradition_category_key
-Supported Scopes: planet country ship pop pop_group
+Supported Scopes: all
 
 add_ascension_perk - Adds the specified ascension perk to the scoped country.
 add_ascension_perk = ascension_perk_key
@@ -7696,7 +7693,7 @@ Supported Scopes: country
 
 remove_ascension_perk - Remove the target ascension perk from the scoped Country.
 remove_ascension_perk = ascension_perk_key
-Supported Scopes: planet country ship pop pop_group
+Supported Scopes: all
 
 add_focus_progress - Adds the defined amount of focus progress in the defined focus category
 add_focus_progress = { category = <focus_category_key> amount = <float>/<variable> }
@@ -7752,14 +7749,14 @@ reset_growth - Resets growth to zero (non-fauna ships)
 reset_growth = {}
 Supported Scopes: ship fleet
 
-remove_zone - Removes a zone from the district of the planet
+remove_zone - Removes a zone from the district of the colony
 	remove_zone = {
 		district = <district_type_key/district_slot_index>
 		zone = <zone_type_key>
 		zone_slot = <zone_slot_index>
 		all = <yes/no>
 	}
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 spawn_psionic_aura - Spawns a Psionic Aura in scoped system, where country is the aura's owner.
 spawn_psionic_aura = { 
@@ -7814,11 +7811,11 @@ Supported Scopes: pop_job
 
 add_terraformation_total_time_mult - Adds a percentage to the total time of the current terraforming process on the planet
 add_terraformation_total_time_mult = <value>
-Supported Scopes: planet
+Supported Scopes: planet ship
 
 finish_terraformation - Finishes the current terraforming process on the planet
 finish_terraformation = yes
-Supported Scopes: planet
+Supported Scopes: planet ship
 
 open_shroud_tab - Opens the Shroud tab
 open_shroud_tab = yes
@@ -7856,15 +7853,15 @@ Supported Scopes: country
 start_terraform_progress - Starts terraforming progress of scoped planet
 start_terraform_progress = <class/random list>
 start_terraform_progress = { class = <class/random list> inherit_entity = yes }
-Supported Scopes: planet
+Supported Scopes: planet ship colony
 
 add_terraform_progress - Adds terraforming progress to scoped planet, finishes the terraformation, if enough progress is reached
 add_terraform_progress = value/variable
-Supported Scopes: planet
+Supported Scopes: planet ship
 
 set_terraform_progress - Sets terraforming progress of scoped planet, finishes the terraformation, if enough progress is reached
 set_terraform_progress = value
-Supported Scopes: planet
+Supported Scopes: planet ship
 
 set_patron_first_contact_state - Sets the contact state with a Shroud Patron (will create the relation if needed).
 set_patron_first_contact_state = {
@@ -7872,6 +7869,76 @@ set_patron_first_contact_state = {
 	state = <none / in_progress / completed (default)>
 }
 Supported Scopes: country
+
+add_resource_to_local_stockpile - Adds specific resources to a ship's stockpile (ship must be able to collect resources; will not add resources above capacity):
+add_resource_to_local_stockpile = {
+	<resource_name_1> = <value_1>
+	<resource_name_2> = <value_2>
+	...
+	mult = <variable> (optional: multiplies all gained resources by a variable)
+}
+Supported Scopes: ship
+
+issue_contract - Adds the specified contract to a target system.
+The issuing country is the scoped country, contract and system are specified as parameter to the effect. You can additionally restrict who can pick up the contract by using a target
+issue_contract = {
+	contract = harvest_resources
+	location = overlord.capital
+	<target = this>
+}
+Supported Scopes: country
+
+cancel_contract - Cancels the scoped to contract.
+Has options for whether the contract cost should be refunded to the issuer, and if messages of the cancellation should be shown to the player.
+cancel_contract = {
+	refund = yes/no (optional - default: yes)
+	show_message = yes/no (optional - default: yes)
+}
+Supported Scopes: mission
+
+transfer_resource_stockpile - Transfers all resources from the scoped ship to another ship or country:
+transfer_resource_stockpile = {
+	target = <ship/country scope> (Must be able to collect resources; will not add resources above capacity)
+	mult = <variable> (optional: multiplies all transferred resources by a variable if this is less than 1, all resources are removed from the ship but the target only receives a fraction, e.g.mult = 0.5 would give the target 50 % of the ship's stockpile with the remainder disappearing)
+}
+Supported Scopes: ship
+
+set_animation_state - Sets the animation state of the scoped object
+set_animation_state = "closing"
+Supported Scopes: megastructure ship fleet
+
+lock_animation_state - Locks the animation state of the scoped object. This will let it change states until it hits the given state, at which point it won't change states anymore. "none" clears this behavior.
+lock_animation_state = "closing"/none
+Supported Scopes: ship fleet
+
+transfer_carrier - Transfer the colony to another carrier
+transfer_carrier = {
+	source = <source colony/carrier>
+	target = <target carrier>
+	transfer_ownership = yes/no # default: no
+	transfer_controller = yes/no # default: no
+	merge_pops = yes/no # default: no
+	destroy_colony = yes/no # default: no
+}
+Supported Scopes: all
+
+create_sector - Creates a sector with the scoped colony as capital, if it's not already within a sector
+create_sector = yes
+Supported Scopes: planet ship colony
+
+steal_planet_output - Steals resource output from a planet and gives it to a target empire or stockpile.
+steal_planet_output = { planet = <target> who = <country or ship scope> resource = <key|group|all> max_amount = <value> percentage = <value|scripted_value> mode = <duplicate|steal> (default: steal) notification_mode = <none|thief_only|both> (default: thief_only) show_in_monthly_resources_mode = <none|thief_only|both> (default: thief_only) }
+resource groups: basic, advanced, strategic, rare, other, research, material (material = basic + advanced + strategic + rare)
+Supported Scopes: planet
+
+set_system_locked - Sets the system lock status for the scoped colony or carrier and cancels any current encampment or packup process
+set_system_locked = yes/no
+Supported Scopes: planet ship colony
+
+set_resource_converter - Sets the resource currency converter for the country
+set_resource_converter = <converter_key/none>
+Supported Scopes: country
+
 
 unlock_council_selection - Unlocks council selection
 unlock_council_selection = yes
