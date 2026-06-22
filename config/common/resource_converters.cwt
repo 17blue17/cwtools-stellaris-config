@@ -1,0 +1,10 @@
+
+types = {
+	type[resource_converters] = {
+		path = "game/common/resource_converters"
+	}
+}
+
+resource_converters = {
+	
+}
