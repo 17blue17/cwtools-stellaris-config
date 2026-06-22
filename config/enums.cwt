@@ -1012,5 +1012,6 @@ enums = {
 		open
 		closing
 		destroyed
+		none
 	}
 }
