@@ -3114,8 +3114,6 @@ alias[effect:trigger_megastructure_icon] = yes
 ### Starts an upgrade process on a mega structure. upgrade_megastructure_to = <new_type>
 alias[effect:upgrade_megastructure_to] = <megastructure>
 
-#2.2
-
 ###Adds specific resource to the stockpile for the country scope
 alias[effect:add_resource] = {
 	## cardinality = 1..inf
@@ -4554,7 +4552,7 @@ alias[effect:stop_mission] = {
 	status = success
 }
 
-###Selects a decision on a planet
+###Selects a decision on a colony carrier
 alias[effect:select_decision] = {
 	name = <decision>
 }
@@ -4645,6 +4643,8 @@ alias[effect:spawn_custom_debris] = {
 	must_reanimate = bool
 	## cardinality = 0..1
 	reset_killed_ship_designs = bool
+	## cardinality = 0..1
+	reset_killed_ship_stockpile = bool
 	## cardinality = 0..1
 	should_add_ship_to_debris = {
 		## cardinality = 0..1
@@ -4778,12 +4778,6 @@ alias[effect:repair_armor_amount] = float
 ###Restores a certain amount of shield points to the scoped ship or fleet
 alias[effect:repair_shield_amount] = float
 
-###Sets if a country needs a colony (or a colony ship) to be considered alive
-alias[effect:set_faction_needs_colony] = bool
-
-###Sets if country will be automatically deleted when considered dead
-alias[effect:set_faction_auto_delete] = bool
-
 ###Copies the traditions of the target country into the scoped country. Traditions are added to the existing traditions, and the potential/possible triggers are respected.the traditions listed in the exceptions list are not copied.
 alias[effect:copy_traditions_from] = {
     target = scope_group[target_country]
@@ -4882,7 +4876,7 @@ alias[effect:add_growth] = int_value_field
 ###Resets growth to zero (non-fauna ships)
 alias[effect:reset_growth] = {}
 
-###Removes a zone from the district of the planet
+###Removes a zone from the district of the colony
 alias[effect:remove_zone] = {
 	## cardinality = 0..1
 	district = <district>
@@ -5344,4 +5338,100 @@ alias[effect:create_random_fleet] = {
 ###If the target fleet is MIA, returns it from MIA immediately
 alias[effect:return_from_mia] = scope[fleet]
 
+###Adds specific resources to a ship's stockpile (ship must be able to collect resources; will not add resources above capacity):
+alias[effect:add_resource_to_local_stockpile] = {
+	## cardinality = 1..inf
+	<resource> = value_field
+	## cardinality = 0..1
+	mult = value_field
+	## cardinality = 0..1
+	mult = enum[exe_set_variable]
+}
 
+###Adds the specified contract to a target system. The issuing country is the scoped country, contract and system are specified as parameter to the effect. You can additionally restrict who can pick up the contract by using a target
+alias[effect:issue_contract] = {
+	contract = <mission_type>
+	location = scope[system]
+	## cardinality = 0..1
+	target = scope[target_country]
+}
+
+###Cancels the scoped to contract. Has options for whether the contract cost should be refunded to the issuer, and if messages of the cancellation should be shown to the player.
+alias[effect:cancel_contract] = {
+	refund = bool
+	show_message = bool
+}
+
+###Transfers all resources from the scoped ship to another ship or country:
+alias[effect:transfer_resource_stockpile] = {
+	target = scope[target_country] 
+	## cardinality = 0..1
+	mult = value_field
+	## cardinality = 0..1
+	mult = enum[exe_set_variable]
+}
+
+###Sets the animation state of the scoped object
+alias[effect:set_animation_state] = enum[animation_state]
+
+###Locks the animation state of the scoped object. This will let it change states until it hits the given state, at which point it won't change states anymore. "none" clears this behavior.
+alias[effect:lock_animation_state] = enum[animation_state]
+
+###Transfer the colony to another carrier
+alias[effect:transfer_carrier] = {
+	## cardinality = 0..1
+	source = scope[target_planet]
+	## cardinality = 0..1
+	target = scope[carrier]
+	## cardinality = 0..1
+	transfer_ownership = bool
+	## cardinality = 0..1
+	transfer_controller = bool
+	## cardinality = 0..1
+	merge_pops = bool
+	## cardinality = 0..1
+	destroy_colony = bool
+}
+
+###Creates a sector with the scoped colony as capital, if it's not already within a sector
+alias[effect:create_sector] = bool
+
+###Steals resource output from a planet and gives it to a target empire or stockpile.
+alias[effect:steal_planet_output] = { 
+	planet = scope[planet]
+	who = scope[target_country]
+	## cardinality = 0..1
+	resource = <resource> 
+	## cardinality = 0..1
+	resource = enum[resource groups]
+	## cardinality = 0..1
+	resource = all
+	## cardinality = 0..1
+	max_amount = value_field
+	## cardinality = 0..1
+	percentage = value_field
+	## cardinality = 0..1
+	mode = duplicate
+	## cardinality = 0..1
+	mode = steal
+	## cardinality = 0..1
+	notification_mode = none 
+	## cardinality = 0..1
+	notification_mode = thief_only 
+	## cardinality = 0..1
+	notification_mode = both 
+	## cardinality = 0..1
+	show_in_monthly_resources_mode = none
+	## cardinality = 0..1
+	show_in_monthly_resources_mode = thief_only
+	## cardinality = 0..1
+	show_in_monthly_resources_mode = both
+}
+
+###Sets the system lock status for the scoped colony or carrier and cancels any current encampment or packup process
+alias[effect:set_system_locked] = bool
+
+###Sets the resource currency converter for the country
+alias[effect:set_resource_converter] = <resource_converters>
+###Sets the resource currency converter for the country
+alias[effect:set_resource_converter] = none
