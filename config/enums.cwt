@@ -1005,4 +1005,12 @@ enums = {
 		operation_diplomatic_incident_timer
 		recently_stole_technology
 	}
+	enum[animation_state] = {
+		idle
+		moving
+		attack
+		open
+		closing
+		destroyed
+	}
 }
