@@ -52,6 +52,12 @@ types = {
 		## abbreviation = CE
 		subtype[colony] = {
 		}
+		## type_key_filter = carrier_event
+		## push_scope = carrier
+		## display_name = Carrier Event
+		## abbreviation = CARE
+		subtype[carrier] = {
+		}
 		## type_key_filter = first_contact_event
 		## push_scope = first_contact
 		## display_name = First Contact Event
