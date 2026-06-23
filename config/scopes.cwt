@@ -144,6 +144,9 @@ scopes = {
 	"Carrier" = {
 		aliases = { carrier }
 	}
+	"Galactic Community" = {
+		aliases = { galactic_community}
+	}
 }
 
 scope_groups = {
