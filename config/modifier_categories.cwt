@@ -78,7 +78,7 @@ modifier_categories = {
         supported_scopes = { federation }
     }
 	"Galactic Community" = {
-		 supported_scopes = { leader country }
+		 supported_scopes = { galactic_community }
     }
     Espionage = {
         supported_scopes = { country spynetwork }
