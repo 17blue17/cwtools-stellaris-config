@@ -5354,7 +5354,7 @@ alias[effect:issue_contract] = {
 	contract = <mission_type>
 	location = scope[system]
 	## cardinality = 0..1
-	target = scope[target_country]
+	target = scope_group[target_country]
 }
 
 ###Cancels the scoped to contract. Has options for whether the contract cost should be refunded to the issuer, and if messages of the cancellation should be shown to the player.
@@ -5365,7 +5365,7 @@ alias[effect:cancel_contract] = {
 
 ###Transfers all resources from the scoped ship to another ship or country:
 alias[effect:transfer_resource_stockpile] = {
-	target = scope[target_country] 
+	target = scope_group[target_country] 
 	## cardinality = 0..1
 	mult = value_field
 	## cardinality = 0..1
@@ -5400,7 +5400,7 @@ alias[effect:create_sector] = bool
 ###Steals resource output from a planet and gives it to a target empire or stockpile.
 alias[effect:steal_planet_output] = { 
 	planet = scope[planet]
-	who = scope[target_country]
+	who = scope_group[target_country]
 	## cardinality = 0..1
 	resource = <resource> 
 	## cardinality = 0..1
@@ -5438,10 +5438,10 @@ alias[effect:set_resource_converter] = <resource_converters>
 alias[effect:set_resource_converter] = none
 
 ###Forces the diplomacy view to open for the scoped country targeted at the given country, on the diplomacy tab. Only works inside on_custom_diplomacy events, relic activation effects, or events triggered from those. Does nothing if communications are missing or if the target has custom_diplomacy = yes.
-alias[effect:force_show_diplomacy] = scope[target_country]
+alias[effect:force_show_diplomacy] = scope_group[target_country]
 
 ###Forces the diplomacy view to open for the scoped country targeted at the given country, on the espionage tab. Only works inside on_custom_diplomacy events, relic activation effects, or events triggered from those. Does nothing if communications are missing or if espionage is not actionable against the target.
-alias[effect:force_show_espionage] = scope[target_country]
+alias[effect:force_show_espionage] = scope_group[target_country]
 
 ###Fires a colony event for the scoped colony, with optional DAYS and RANDOM delay
 alias[effect:colony_event] = {
@@ -5491,7 +5491,7 @@ alias[effect:carrier_event] = {
 
 ###Spawn a random anomaly on the scoped planet
 alias[effect:spawn_random_anomaly] = {
-	target = scope[target_country]
+	target = scope_group[target_country]
 }
 
 ###Creates a fleet of the requested size, distributing ships deterministically across the listed designs by each ship_size's ai_ship_data.fraction.
