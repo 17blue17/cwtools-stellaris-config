@@ -247,6 +247,10 @@ links = {
 		input_scopes = { country }
 		output_scope = federation
 	}
+	galactic_community = {
+		input_scopes = { country }
+		output_scope = galactic_community
+	}
 	last_added_deposit = {
 		input_scopes = { planet ship colony }
 		output_scope = deposit
