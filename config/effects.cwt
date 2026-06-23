@@ -763,9 +763,7 @@ alias[effect:create_fleet_from_naval_cap] = value_field
 ###Creates a new fleet from empire designs up to specified fraction of naval cap
 alias[effect:create_fleet_from_naval_cap] = {
 	fraction = value_field
-	ship_owner_type = country
-	ship_owner_type = federation
-	ship_owner_type = galactic_community
+	ship_owner_type = enum[ship_owner_type]
 	##cardinality = 0..inf
 	can_overflow = bool
 }
