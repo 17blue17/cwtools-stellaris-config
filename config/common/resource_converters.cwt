@@ -6,5 +6,39 @@ types = {
 }
 
 resource_converters = {
-	
+	## cardinality = 0..1
+	resource_conversions = {
+		## cardinality = 0..inf
+		<resource> = {
+			## cardinality = 0..1
+			should_cap = bool
+			## cardinality = 0..1
+            bottomless = bool
+			## cardinality = 0..1
+            visible = bool
+			## cardinality = 0..1
+            visible_stockpile = bool
+			## cardinality = 0..1
+            can_buy = bool
+			## cardinality = 0..1
+            can_sell = bool
+			## cardinality = 0..1
+            affected_situation = <situation_type>
+			## cardinality = 0..1
+            affected_situation_mult = int
+			## cardinality = 0..1
+            can_be_paid_with = {
+                <resource> =  value_field
+            }
+			## cardinality = 0..1
+			override_trade_restriction = bool
+		}
+		## cardinality = 0..1
+		visibility_overrides = {
+			## cardinality = 0..1
+			tb_operational_reserves_group = bool
+			## cardinality = 0..1
+			tb_others_group = bool
+		}
+	}
 }
