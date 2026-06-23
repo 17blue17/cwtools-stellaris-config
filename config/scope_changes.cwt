@@ -878,7 +878,7 @@ alias[effect:random_system_within_border] = {
 }
 
 ## push_scope = starbase
-###Iterate through every owned primary starbase - executes the enclosed effects on all of them for which the limit triggers return true
+###Iterate through every owned primary starbase (i.e. the starbase that claims ownership of a system). - executes the enclosed effects on all of them for which the limit triggers return true
 alias[effect:every_owned_starbase] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -886,7 +886,7 @@ alias[effect:every_owned_starbase] = {
 }
 
 ## push_scope = starbase
-###Iterate through every owned primary starbase - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+###Iterate through every owned primary starbase (i.e. the starbase that claims ownership of a system). - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
 alias[effect:ordered_owned_starbase] = {
 	position = int[0..inf]
 	##cardinality = 0..1
@@ -909,7 +909,7 @@ alias[effect:ordered_owned_starbase] = {
 }
 
 ## push_scope = starbase
-###Iterate through every owned primary starbase - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+###Iterate through every owned primary starbase (i.e. the starbase that claims ownership of a system). - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
 alias[effect:random_owned_starbase] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -1100,17 +1100,17 @@ alias[effect:random_country] = {
 	}
 }
 
-## push_scope = planet
-###Executes enclosed effects on every planet -owned by the scoped country- that meet the limit criteria
-alias[effect:every_owned_planet] = {
+## push_scope = colony
+###Iterate through each colony owned by the current empire - executes the enclosed effects on all of them for which the limit triggers return true
+alias[effect:every_owned_colony] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 	alias_name[effect] = alias_match_left[effect]
 }
 
-## push_scope = planet
-###Executes enclosed effects on every planet - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
-alias[effect:ordered_owned_planet] = {
+## push_scope = colony
+###Iterate through each colony owned by the current empire - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+alias[effect:ordered_owned_colony] = {
 	##cardinality = 0..1
 	position = int[0..inf]
 	##cardinality = 0..1
@@ -1132,9 +1132,9 @@ alias[effect:ordered_owned_planet] = {
 	alias_name[effect] = alias_match_left[effect]
 }
 
-## push_scope = planet
-###Executes enclosed effects on a planet -owned by the scoped country- that meets the limit criteria
-alias[effect:random_owned_planet] = {
+## push_scope = colony
+###Iterate through each colony owned by the current empire - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+alias[effect:random_owned_colony] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 	alias_name[effect] = alias_match_left[effect]
@@ -1839,7 +1839,7 @@ alias[effect:random_controlled_ship] = {
 }
 
 ## push_scope = planet
-###Executes enclosed effects on every planet -controlled by the scoped country- that meet the limit criteria
+###Iterate through each planet controlled by the current empire - executes the enclosed effects on all of them for which the limit triggers return true
 alias[effect:every_controlled_planet] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -1847,7 +1847,7 @@ alias[effect:every_controlled_planet] = {
 }
 
 ## push_scope = planet
-###Iterate through all planets controlled by the scoped country - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+###Iterate through each planet controlled by the current empire - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
 alias[effect:ordered_controlled_planet] = {
 	position = int[0..inf]
 	##cardinality = 0..1
@@ -1870,7 +1870,7 @@ alias[effect:ordered_controlled_planet] = {
 }
 
 ## push_scope = planet
-###Executes enclosed effects on a random planet -controlled by the scoped country- that meets the limit criteria
+###Iterate through each planet controlled by the current empire - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
 alias[effect:random_controlled_planet] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -2172,7 +2172,7 @@ alias[effect:ordered_owned_pop_species] = {
 }
 
 ## push_scope = army
-### Iterate through each defending army on a planet
+### Iterate through each army on the colony (not in ground combat), regardless of owner. - executes the enclosed effects on all of them for which the limit triggers return true
 alias[effect:every_planet_army] = {
 	## cardinality = 0..1
 	limit = {
@@ -2182,7 +2182,7 @@ alias[effect:every_planet_army] = {
 }
 
 ## push_scope = army
-### Iterate through each defending army on a planet - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+### Iterate through each army on the colony (not in ground combat), regardless of owner. - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
 alias[effect:ordered_planet_army] = {
 	position = int[0..inf]
 	##cardinality = 0..1
@@ -2249,7 +2249,7 @@ alias[effect:random_owned_pop_species] = {
 }
 
 ## push_scope = army
-### Iterate through each defending army on a planet
+###Iterate through each army on the colony (not in ground combat), regardless of owner. - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
 alias[effect:random_planet_army] = {
 	## cardinality = 0..1
 	limit = {
@@ -2285,7 +2285,7 @@ alias[trigger:any_deposit] = {
 }
 
 ## push_scope = deposit
-###Executes on every deposit on planet
+###Iterate through each deposit on the colony carrier - executes the enclosed effects on all of them for which the limit triggers return true
 alias[effect:every_deposit] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -2293,7 +2293,7 @@ alias[effect:every_deposit] = {
 }
 
 ## push_scope = deposit
-###Iterate through each deposit on a planet - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+###Iterate through each deposit on the colony carrier - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
 alias[effect:ordered_deposit] = {
 	position = int[0..inf]
 	##cardinality = 0..1
@@ -2316,7 +2316,7 @@ alias[effect:ordered_deposit] = {
 }
 
 ## push_scope = deposit
-###Executes enclosed effects on a random deposit on the scoped planet that meets the limit criteria
+###Iterate through each deposit on the colony carrier - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
 alias[effect:random_deposit] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -2615,7 +2615,7 @@ alias[trigger:count_owned_species] = {
 }
 
 ## push_scope = species
-###Iterate through each species belonging to the country/planet
+###Check if any of the species in the current scope meet the specified criteria - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
 alias[effect:random_owned_species] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -2628,7 +2628,7 @@ alias[effect:random_owned_species] = {
 }
 
 ## push_scope = species
-###Iterate through each species belonging to the country/planet
+###Check if any of the species in the current scope meet the specified criteria - executes the enclosed effects on all of them for which the limit triggers return true
 alias[effect:every_owned_species] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -2636,7 +2636,7 @@ alias[effect:every_owned_species] = {
 }
 
 ## push_scope = species
-###Iterate through each species belonging to the country/planet - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+###Check if any of the species in the current scope meet the specified criteria - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
 alias[effect:ordered_owned_species] = {
 	position = int[0..inf]
 	##cardinality = 0..1
@@ -2675,7 +2675,7 @@ alias[trigger:count_enslaved_species] = {
 }
 
 ## push_scope = species
-###Iterate through each species enslaved by the country/planet
+###Check if any of the species with enslaved pops in the current scope meet the specified criteria - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
 alias[effect:random_enslaved_species] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -2688,7 +2688,7 @@ alias[effect:random_enslaved_species] = {
 }
 
 ## push_scope = species
-###Iterate through each species enslaved by the country/planet
+###Check if any of the species with enslaved pops in the current scope meet the specified criteria - executes the enclosed effects on all of them for which the limit triggers return true
 alias[effect:every_enslaved_species] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -2696,7 +2696,7 @@ alias[effect:every_enslaved_species] = {
 }
 
 ## push_scope = species
-###Iterate through each species enslaved by the country/planet - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+###Check if any of the species with enslaved pops in the current scope meet the specified criteria - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
 alias[effect:ordered_enslaved_species] = {
 	position = int[0..inf]
 	##cardinality = 0..1
@@ -3943,7 +3943,7 @@ alias[trigger:count_ground_combat_attacker] = {
 }
 
 ## push_scope = army
-###Iterate through each army currently defending the planet in ground combat - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+###Iterate through each army currently defending the colony in ground combat - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
 alias[effect:random_ground_combat_defender] = {
 	## cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -3954,7 +3954,7 @@ alias[effect:random_ground_combat_defender] = {
 }
 
 ## push_scope = army
-###Iterate through each army currently defending the planet in ground combat - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+###Iterate through each army currently defending the colony in ground combat - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
 alias[effect:ordered_ground_combat_defender] = {
 	###starting with 0
 	position = int[0..inf]
@@ -3979,7 +3979,7 @@ alias[effect:ordered_ground_combat_defender] = {
 }
 
 ## push_scope = army
-###Iterate through each army currently defending the planet in ground combat - executes the enclosed effects on all of them for which the limit triggers return true
+###Iterate through each army currently defending the colony in ground combat - executes the enclosed effects on all of them for which the limit triggers return true
 alias[effect:every_ground_combat_defender] = {
 	## cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -3987,7 +3987,7 @@ alias[effect:every_ground_combat_defender] = {
 }
 
 ## push_scope = army
-###Iterate through each army currently attacking the planet in ground combat - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+###Iterate through each army currently attacking the colony in ground combat - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
 alias[effect:random_ground_combat_attacker] = {
 	## cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -3998,7 +3998,7 @@ alias[effect:random_ground_combat_attacker] = {
 }
 
 ## push_scope = army
-###Iterate through each army currently attacking the planet in ground combat - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+###Iterate through each army currently attacking the colony in ground combat - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
 alias[effect:ordered_ground_combat_attacker] = {
 	###starting with 0
 	position = int[0..inf]
@@ -4023,7 +4023,7 @@ alias[effect:ordered_ground_combat_attacker] = {
 }
 
 ## push_scope = army
-###Iterate through each army currently attacking the planet in ground combat - executes the enclosed effects on all of them for which the limit triggers return true
+###Iterate through each army currently attacking the colony in ground combat - executes the enclosed effects on all of them for which the limit triggers return true
 alias[effect:every_ground_combat_attacker] = {
 	## cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -4275,7 +4275,7 @@ alias[trigger:count_situation] = {
 }
 
 ## push_scope = situation
-###Iterate through each situation that is targeting the current planet - executes the enclosed effects on all of them for which the limit triggers return true
+###Iterate through each situation that is targeting the current colony carrier - executes the enclosed effects on all of them for which the limit triggers return true
 alias[effect:every_targeting_situation] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -4283,7 +4283,7 @@ alias[effect:every_targeting_situation] = {
 }
 
 ## push_scope = situation
-###Iterate through each situation that is targeting the current planet - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+###Iterate through each situation that is targeting the current colony carrier - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
 alias[effect:ordered_targeting_situation] = {
 	position = int[0..inf]
 	##cardinality = 0..1
@@ -4306,7 +4306,7 @@ alias[effect:ordered_targeting_situation] = {
 }
 
 ## push_scope = situation
-###Iterate through each situation that is targeting the current planet - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+###Iterate through each situation that is targeting the current colony carrier - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
 alias[effect:random_targeting_situation] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -4517,7 +4517,7 @@ alias[trigger:count_owned_design] = {
 # 3.5 "Fornax"
 
 ## push_scope = starbase
-###Iterate through every owned non-primary starbase (e.g. orbital rings), not including juggernauts - executes the enclosed effects on all of them for which the limit triggers return true
+###Iterate through every owned non-primary starbase (e.g. orbital rings, deep space citadels, or waystations). This does not return mobile starbases (e.g. juggernauts or arkships). - executes the enclosed effects on all of them for which the limit triggers return true
 alias[effect:every_owned_nonprimary_starbase] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -4525,7 +4525,7 @@ alias[effect:every_owned_nonprimary_starbase] = {
 }
 
 ## push_scope = starbase
-###Iterate through every owned non-primary starbase (e.g. orbital rings), not including juggernauts - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+###Iterate through every owned non-primary starbase (e.g. orbital rings, deep space citadels, or waystations). This does not return mobile starbases (e.g. juggernauts or arkships). - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
 alias[effect:ordered_owned_nonprimary_starbase] = {
 	position = int[0..inf]
 	##cardinality = 0..1
@@ -4548,7 +4548,7 @@ alias[effect:ordered_owned_nonprimary_starbase] = {
 }
 
 ## push_scope = starbase
-###Iterate through every owned non-primary starbase (e.g. orbital rings), not including juggernauts - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+###Iterate through every owned non-primary starbase (e.g. orbital rings, deep space citadels, or waystations). This does not return mobile starbases (e.g. juggernauts or arkships). - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
 alias[effect:random_owned_nonprimary_starbase] = {
 	##cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
@@ -4576,17 +4576,25 @@ alias[trigger:count_owned_nonprimary_starbase] = {
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 }
 
-## push_scope = planet
-###Iterate through each colony in the current system - executes the enclosed effects on all of them for which the limit triggers return true
-alias[effect:every_system_colony] = {
+## push_scope = colony
+###Iterate through each planet colony in the current system - executes the enclosed effects on all of them for which the limit triggers return true
+alias[effect:every_system_planet_colony] = {
 	## cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 	alias_name[effect] = alias_match_left[effect]
 }
 
-## push_scope = planet
-###Iterate through each colony in the current system - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
-alias[effect:ordered_system_colony] = {
+## push_scope = colony
+###Iterate through each ship colony in the current system - executes the enclosed effects on all of them for which the limit triggers return true
+alias[effect:every_system_ship_colony] = {
+	## cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+## push_scope = colony
+###Iterate through each planet colony in the current system - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+alias[effect:ordered_system_planet_colony] = {
 	position = int[0..inf]
 	##cardinality = 0..1
 	order_by = value_field
@@ -4607,9 +4615,45 @@ alias[effect:ordered_system_colony] = {
 	alias_name[effect] = alias_match_left[effect]
 }
 
-## push_scope = planet
-###Iterate through each colony in the current system - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
-alias[effect:random_system_colony] = {
+## push_scope = colony
+###Iterate through each ship colony in the current system - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+alias[effect:ordered_system_ship_colony] = {
+	position = int[0..inf]
+	##cardinality = 0..1
+	order_by = value_field
+	##cardinality = 0..1
+	order_by = value[variable]
+		##cardinality = 0..1
+	order_by = trigger:<trigger>
+	##cardinality = 0..1
+	order_by = enum[order_by]
+	## cardinality = 0..inf
+	order_by = { 
+		alias_name[trigger] = alias_match_left[trigger]
+	}
+	## cardinality = 0..1
+	inverse = bool
+	## cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+## push_scope = colony
+###Iterate through each planet colony in the current system - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+alias[effect:random_system_planet_colony] = {
+	## cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+	## cardinality = 0..1
+	###(optional - adds weights to affect the chance a specific object is selected)
+	weights = {
+		alias_name[modifier_rule] = alias_match_left[modifier_rule]
+	}
+}
+
+## push_scope = colony
+###Iterate through each ship colony in the current system - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+alias[effect:random_system_ship_colony] = {
 	## cardinality = 0..1
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 	alias_name[effect] = alias_match_left[effect]
@@ -6113,18 +6157,249 @@ alias[trigger:count_controlled_planet] = {
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 }
 
+# This is not really a scope change as starbase and waystation are both starbase scope but I think it does not hurt to leave it here.
 ## push_scope = starbase
 ###Iterate through every starbase in the same waystation network as the scoped starbase. - checks whether the enclosed triggers return true for any of them
 alias[trigger:any_starbase_in_network] = { 
 	alias_name[trigger] = alias_match_left[trigger]
 }
 
+# This is not really a scope change as starbase and waystation are both starbase scope but I think it does not hurt to leave it here.
 ###Iterate through every starbase in the same waystation network as the scoped starbase. - checks whether the enclosed triggers return true for X/all of them
 alias[trigger:count_starbase_in_network] = {
 	count = all
 	count = int_value_field
 	count = value[variable]
 	## cardinality = 0..1
-	## push_scope = planet
+	## push_scope = starbase
 	limit = { alias_name[trigger] = alias_match_left[trigger] }
 }
+
+##  push_scope =  mission
+###Iterate through each mission a country has - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+alias[effect:random_owned_mission] = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+
+	##cardinality = 0..1
+	weights = {
+		## cardinality = 0..inf
+		alias_name[modifier_rule] = alias_match_left[modifier_rule]
+	}
+}
+
+##  push_scope =  mission
+###Iterate through each mission a country has - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+alias[effect:ordered_owned_mission] = {
+	position = int[0..inf]
+	##cardinality = 0..1
+	order_by = value_field
+	##cardinality = 0..1
+	order_by = value[variable]
+		##cardinality = 0..1
+	order_by = trigger:<trigger>
+	##cardinality = 0..1
+	order_by = enum[order_by]
+	## cardinality = 0..inf
+	order_by = { 
+		alias_name[trigger] = alias_match_left[trigger]
+	}
+	##cardinality = 0..1
+	inverse = bool
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+##  push_scope =  mission
+### Iterate through each mission a country has - executes the enclosed effects on all of them for which the limit triggers return true
+alias[effect:every_owned_mission] = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+##  push_scope =  mission
+###Iterate through each mission that the current country has issued - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+alias[effect:random_issued_mission] = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+
+	##cardinality = 0..1
+	weights = {
+		## cardinality = 0..inf
+		alias_name[modifier_rule] = alias_match_left[modifier_rule]
+	}
+}
+
+##  push_scope =  mission
+###Iterate through each mission that the current country has issued - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+alias[effect:ordered_issued_mission] = {
+	position = int[0..inf]
+	##cardinality = 0..1
+	order_by = value_field
+	##cardinality = 0..1
+	order_by = value[variable]
+		##cardinality = 0..1
+	order_by = trigger:<trigger>
+	##cardinality = 0..1
+	order_by = enum[order_by]
+	## cardinality = 0..inf
+	order_by = { 
+		alias_name[trigger] = alias_match_left[trigger]
+	}
+	##cardinality = 0..1
+	inverse = bool
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+##  push_scope =  mission
+###Iterate through each mission that the current country has issued - executes the enclosed effects on all of them for which the limit triggers return true
+alias[effect:every_issued_mission = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+##  push_scope =  mission
+###Iterate through each contract a country has - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+alias[effect:random_owned_contract] = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+
+	##cardinality = 0..1
+	weights = {
+		## cardinality = 0..inf
+		alias_name[modifier_rule] = alias_match_left[modifier_rule]
+	}
+}
+
+##  push_scope =  mission
+###Iterate through each contract a country has - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+alias[effect:ordered_owned_contract] = {
+	position = int[0..inf]
+	##cardinality = 0..1
+	order_by = value_field
+	##cardinality = 0..1
+	order_by = value[variable]
+		##cardinality = 0..1
+	order_by = trigger:<trigger>
+	##cardinality = 0..1
+	order_by = enum[order_by]
+	## cardinality = 0..inf
+	order_by = { 
+		alias_name[trigger] = alias_match_left[trigger]
+	}
+	##cardinality = 0..1
+	inverse = bool
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+##  push_scope =  mission
+###Iterate through each contract a country has - executes the enclosed effects on all of them for which the limit triggers return true
+alias[effect:every_owned_contract] = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+##  push_scope =  colony
+###Iterate through each colony controlled by the current empire - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+alias[effect:random_controlled_colony] = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+
+	##cardinality = 0..1
+	weights = {
+		## cardinality = 0..inf
+		alias_name[modifier_rule] = alias_match_left[modifier_rule]
+	}
+}
+
+##  push_scope =  colony
+###Iterate through each colony controlled by the current empire - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+alias[effect:ordered_controlled_colony] = {
+	position = int[0..inf]
+	##cardinality = 0..1
+	order_by = value_field
+	##cardinality = 0..1
+	order_by = value[variable]
+		##cardinality = 0..1
+	order_by = trigger:<trigger>
+	##cardinality = 0..1
+	order_by = enum[order_by]
+	## cardinality = 0..inf
+	order_by = { 
+		alias_name[trigger] = alias_match_left[trigger]
+	}
+	##cardinality = 0..1
+	inverse = bool
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+##  push_scope =  colony
+###Iterate through each colony controlled by the current empire - executes the enclosed effects on all of them for which the limit triggers return true
+alias[effect:every_controlled_colony] = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+# Not really a scope change as both starbase and waystation are both starbase scope but leave here as it can't hurt.
+##  push_scope =  starbase
+###Iterate through every starbase in the same waystation network as the scoped starbase. - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
+alias[effect:random_starbase_in_network] = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+
+	##cardinality = 0..1
+	weights = {
+		## cardinality = 0..inf
+		alias_name[modifier_rule] = alias_match_left[modifier_rule]
+	}
+}
+
+# Not really a scope change as both starbase and waystation are both starbase scope but leave here as it can't hurt.
+##  push_scope =  starbase
+###Iterate through every starbase in the same waystation network as the scoped starbase. - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+alias[effect:ordered_starbase_in_network] = {
+	position = int[0..inf]
+	##cardinality = 0..1
+	order_by = value_field
+	##cardinality = 0..1
+	order_by = value[variable]
+		##cardinality = 0..1
+	order_by = trigger:<trigger>
+	##cardinality = 0..1
+	order_by = enum[order_by]
+	## cardinality = 0..inf
+	order_by = { 
+		alias_name[trigger] = alias_match_left[trigger]
+	}
+	##cardinality = 0..1
+	inverse = bool
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+# Not really a scope change as both starbase and waystation are both starbase scope but leave here as it can't hurt.
+##  push_scope =  starbase
+###Iterate through every starbase in the same waystation network as the scoped starbase. - executes the enclosed effects on all of them for which the limit triggers return true
+alias[effect:every_starbase_in_network] = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
