@@ -1023,4 +1023,9 @@ enums = {
 		research
 		material
 	}
+	enum[ship_owner_type] = {
+		country
+		federation
+		galactic_community
+	}
 }
