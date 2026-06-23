@@ -7546,7 +7546,7 @@ spawn_custom_debris = {
 }
 Supported Scopes: fleet
 
-Selects a decision on a colony carrier
+select_decision - Selects a decision on a colony carrier
 select_decision = {
 	name = <decision>
 }
