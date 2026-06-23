@@ -5381,7 +5381,7 @@ alias[effect:lock_animation_state] = enum[animation_state]
 ###Transfer the colony to another carrier
 alias[effect:transfer_carrier] = {
 	## cardinality = 0..1
-	source = scope[target_planet]
+	source = scope_group[target_planet]
 	## cardinality = 0..1
 	target = scope[carrier]
 	## cardinality = 0..1
