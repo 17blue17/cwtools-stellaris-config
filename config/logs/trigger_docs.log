@@ -1089,7 +1089,8 @@ num_owned_leaders - Checks the country's number of owned (recruited) non-envoy l
 num_owned_leaders < 8
 Supported Scopes: country
 
-num_owned_planets - Deprecated
+num_owned_planets - Checks the country's or sector's number of owned colonies (includes both planet and ship colonies)
+(Deprecated; use num_owned_colonies instead)
 num_owned_colonies < 8
 Supported Scopes: country sector
 
@@ -4362,11 +4363,11 @@ count_owned_colony = {
 }
 Supported Scopes: country sector
 
-any_owned_planet - Deprecated
+any_owned_planet - Iterate through each colony owned by the current empire (Deprecated; use owned_colony instead) - checks whether the enclosed triggers return true for any of them
 any_owned_planet = { <triggers> }
 Supported Scopes: country sector
 
-count_owned_planet - Deprecated
+count_owned_planet - Iterate through each colony owned by the current empire (Deprecated; use owned_colony instead) - checks whether the enclosed triggers return true for X/all of them
 count_owned_planet = {
 	count = <num/all/variable>
 	limit = { <triggers> }
@@ -4810,7 +4811,7 @@ count_war = {
 Supported Scopes: country
 
 =================
-[15:03:44][game_application.cpp:1400]: 
+[18:09:10][game_application.cpp:1400]: 
 == EFFECT DOCUMENTATION ==
 tooltip - Just a tooltip
 Supported Scopes: all
@@ -7877,7 +7878,7 @@ add_resource_to_local_stockpile = {
 	...
 	mult = <variable> (optional: multiplies all gained resources by a variable)
 }
-Supported Scopes: ship
+Supported Scopes: ship fleet
 
 issue_contract - Adds the specified contract to a target system.
 The issuing country is the scoped country, contract and system are specified as parameter to the effect. You can additionally restrict who can pick up the contract by using a target
@@ -10197,7 +10198,7 @@ every_owned_colony - Iterate through each colony owned by the current empire - e
 every_owned_colony = { limit = { <triggers> } <effects> }
 Supported Scopes: country sector
 
-random_owned_planet - Deprecated
+random_owned_planet - Iterate through each colony owned by the current empire (Deprecated; use owned_colony instead) - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object randomly.
 random_owned_planet = {
 	limit = { <triggers> }
 	weights = { (optional - adds weights to affect the chance a specific object is selected)
@@ -10208,7 +10209,7 @@ random_owned_planet = {
 }
 Supported Scopes: country sector
 
-ordered_owned_planet - Deprecated
+ordered_owned_planet - Iterate through each colony owned by the current empire (Deprecated; use owned_colony instead) - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
 ordered_owned_planet = {
 	limit = { <triggers> }
 	position = <integer, starting with 0>
@@ -10218,7 +10219,7 @@ ordered_owned_planet = {
 }
 Supported Scopes: country sector
 
-every_owned_planet - Deprecated
+every_owned_planet - Iterate through each colony owned by the current empire (Deprecated; use owned_colony instead) - executes the enclosed effects on all of them for which the limit triggers return true
 every_owned_planet = { limit = { <triggers> } <effects> }
 Supported Scopes: country sector
 
