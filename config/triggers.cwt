@@ -3346,12 +3346,25 @@ alias[trigger:hostile_military_power] = {
 	value = int_value_field
 }
 
-###ERROR:  Deprecated: use num_owned_colonies instead
-alias[trigger:num_owned_planets] = Deprecated
+# Items supposed to be deprecated but Paradox is still using them
 
-###ERROR:  Deprecated: use owned_colony instead
-alias[any_owned_planet] = Deprecated
+###(Supposed to be Deprecated: use num_owned_colonies instead) Checks the country's number of owned planets
+alias[trigger:num_owned_planets] == int_value_field
 
-###ERROR:  Deprecated: use owned_colony instead
-alias[count_owned_planet] = Deprecated
+## push_scope = planet
+###(Supposed to be Deprecated: use owned_colony instead) Checks if any of the country's owned planets meet the specified criteria
+alias[trigger:any_owned_planet] = {
+	alias_name[trigger] = alias_match_left[trigger]
+}
 
+###(Supposed to be Deprecated: use owned_colony instead) Iterate through each inhabited planet owned by the current empire
+alias[trigger:count_owned_planet] = {
+	count = int_value_field
+	count = value[variable]
+	count = all
+	## cardinality = 0..1
+	## push_scope = planet
+	limit = {
+		alias_name[trigger] = alias_match_left[trigger]
+	}
+}
