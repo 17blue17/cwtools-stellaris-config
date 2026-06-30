@@ -6403,3 +6403,69 @@ alias[effect:every_starbase_in_network] = {
 	alias_name[effect] = alias_match_left[effect]
 }
 
+
+
+#The following are supposed to be Deprecated but Paradox is still using in patch 4.4
+
+## push_scope = planet
+###(Supposed to be Deprecated: use owned_colony instead) Checks if any of the country's owned planets meet the specified criteria
+alias[trigger:any_owned_planet] = {
+	alias_name[trigger] = alias_match_left[trigger]
+}
+
+###(Supposed to be Deprecated: use owned_colony instead) Iterate through each inhabited planet owned by the current empire
+alias[trigger:count_owned_planet] = {
+	count = int_value_field
+	count = value[variable]
+	count = all
+	## cardinality = 0..1
+	## push_scope = planet
+	limit = {
+		alias_name[trigger] = alias_match_left[trigger]
+	}
+}
+
+## push_scope = planet
+###{Supposed to be Deprecated) Executes enclosed effects on every planet - executes the enclosed effects on one of them for which the limit triggers return true. Picks the specific object according to the order specified (position 0, order_by = trigger:num_pops would run the effects on the X with the most pops)
+alias[effect:ordered_owned_planet] = {
+	##cardinality = 0..1
+	position = int[0..inf]
+	##cardinality = 0..1
+	order_by = value_field
+	##cardinality = 0..1
+	order_by = value[variable]
+		##cardinality = 0..1
+	order_by = trigger:<trigger>
+	##cardinality = 0..1
+	order_by = enum[order_by]
+	## cardinality = 0..inf
+	order_by = { 
+		alias_name[trigger] = alias_match_left[trigger]
+	}
+	##cardinality = 0..1
+	inverse = bool
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
+
+## push_scope = planet
+###{Supposed to be Deprecated) Executes enclosed effects on a planet -owned by the scoped country- that meets the limit criteria
+alias[effect:random_owned_planet] = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+
+	##cardinality = 0..1
+	weights = {
+		alias_name[modifier_rule] = alias_match_left[modifier_rule]
+	}
+}
+
+## push_scope = planet
+###{Supposed to be Deprecated) Executes enclosed effects on every planet -owned by the scoped country- that meet the limit criteria
+alias[effect:every_owned_planet] = {
+	##cardinality = 0..1
+	limit = { alias_name[trigger] = alias_match_left[trigger] }
+	alias_name[effect] = alias_match_left[effect]
+}
